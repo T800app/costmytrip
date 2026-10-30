@@ -341,8 +341,11 @@
         .cookie-banner {
             position: fixed;
             bottom: 12px;
-            left: 12px;
-            right: 12px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: calc(100% - 24px);
+            max-width: 600px;
+            box-sizing: border-box;
             background: #ffffff;
             padding: 16px;
             border-radius: 16px;
