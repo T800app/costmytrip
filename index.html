@@ -1,0 +1,824 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cost My Trip — Calculate Your Journey Costs</title>
+    <meta name="description" content="Cost My Trip — free UK journey cost calculator. Estimate petrol, diesel and electric vehicle charging costs for any trip in miles. No sign-up needed.">
+    <link rel="canonical" href="https://costmytrip.co.uk/">
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%230284c7'/%3E%3Ctext x='50' y='70' font-size='58' text-anchor='middle' fill='white' font-family='Arial,sans-serif' font-weight='bold'%3E%C2%A3%3C/text%3E%3C/svg%3E">
+    <!-- Google Search Console verification — replace content with your code -->
+    <meta name="google-site-verification" content="HjdE15GoAaT274ijvvbiK6eB6HblnZFaGxSE8fF48Ko">
+
+    <!-- Google Consent Mode v2 — MUST load before gtag.js / AdSense -->
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('consent', 'default', {
+        'ad_storage': 'denied',
+        'ad_user_data': 'denied',
+        'ad_personalization': 'denied',
+        'analytics_storage': 'denied',
+        'wait_for_update': 500
+      });
+      gtag('js', new Date());
+      gtag('config', 'G-NR149MHHDV');
+    </script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-NR149MHHDV"></script>
+    <!-- Google AdSense auto-ads — loads on every visit; with Consent Mode v2 it serves non-personalized ads until the user grants consent -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6363136655011505" crossorigin="anonymous"></script>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+        }
+        body {
+            background: linear-gradient(135deg, #e0f2fe 0%, #f0f9ff 100%);
+            min-height: 100vh;
+            padding: 16px;
+            max-width: 100%;
+            margin: 0 auto;
+        }
+        header {
+            text-align: center;
+            margin-bottom: 24px;
+        }
+        header h1 {
+            color: #0c4a6e;
+            font-size: clamp(1.4rem, 4vw, 2rem);
+            font-weight: 700;
+            margin-bottom: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        header p {
+            color: #475569;
+            font-size: 0.9rem;
+        }
+        .info-box {
+            background: #ffffff;
+            border-radius: 16px;
+            padding: 18px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 12px rgba(148, 163, 184, 0.1);
+        }
+        .info-box h3 {
+            color: #0c4a6e;
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .info-box p {
+            color: #475569;
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+        .card {
+            background: #ffffff;
+            border-radius: 20px;
+            padding: 20px;
+            box-shadow: 0 4px 20px rgba(148, 163, 184, 0.15);
+        }
+        .tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 24px;
+            flex-wrap: wrap;
+        }
+        .tab {
+            flex: 1;
+            min-width: 130px;
+            padding: 14px 12px;
+            border: none;
+            border-radius: 12px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            cursor: pointer;
+            background: #f1f5f9;
+            color: #64748b;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        #tabFuel.active {
+            background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);
+            color: white;
+            box-shadow: 0 4px 12px rgba(2, 132, 199, 0.25);
+        }
+        #tabEv.active {
+            background: linear-gradient(135deg, #16a34a 0%, #15803d 100%);
+            color: white;
+            box-shadow: 0 4px 12px rgba(22, 163, 74, 0.25);
+        }
+        .tab:hover:not(.active) {
+            background: #e2e8f0;
+        }
+        .fuel-theme .help-box {
+            background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+            border-left-color: #0284c7;
+        }
+        .ev-theme .help-box {
+            background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+            border-left-color: #16a34a;
+        }
+        .help-box {
+            border-left: 4px solid;
+            padding: 16px;
+            border-radius: 12px;
+            margin-bottom: 24px;
+            overflow: hidden;
+        }
+        .help-box h4 {
+            font-size: 0.95rem;
+            font-weight: 600;
+            margin-bottom: 12px;
+        }
+        .fuel-theme .help-box h4 { color: #0c4a6e; }
+        .ev-theme .help-box h4 { color: #166534; }
+        
+        /* 🔹 Új, rugalmas lista elrendezés a táblázat helyett */
+        .mpg-list {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 8px;
+            width: 100%;
+        }
+        .mpg-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 6px 0;
+            border-bottom: 1px solid;
+            font-size: 0.85rem;
+        }
+        .fuel-theme .mpg-item { border-bottom-color: #bae6fd; color: #334155; }
+        .ev-theme .mpg-item { border-bottom-color: #bbf7d0; color: #374151; }
+        
+        @media (min-width: 500px) {
+            .mpg-list {
+                grid-template-columns: 1fr 1fr;
+                gap: 4px 20px;
+            }
+        }
+        
+        label {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 8px;
+            margin-top: 20px;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+        .pound-icon {
+            font-weight: 700;
+            font-size: 18px;
+            line-height: 1;
+        }
+        .input-row {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+        select, input {
+            padding: 14px 16px;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+            border: 2px solid #e2e8f0;
+        }
+        select {
+            flex: 0 0 130px;
+        }
+        input {
+            flex: 1;
+            min-width: 150px;
+        }
+        .fuel-theme input:focus, .fuel-theme select:focus {
+            outline: none;
+            border-color: #0284c7;
+        }
+        .ev-theme input:focus, .ev-theme select:focus {
+            outline: none;
+            border-color: #16a34a;
+        }
+        .note {
+            font-size: 0.8rem;
+            margin-top: 8px;
+            line-height: 1.5;
+            display: flex;
+            align-items: flex-start;
+            gap: 6px;
+            color: #64748b;
+        }
+        .fuel-theme .calc-btn {
+            background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);
+        }
+        .ev-theme .calc-btn {
+            background: linear-gradient(135deg, #16a34a 0%, #15803d 100%);
+        }
+        .calc-btn {
+            width: 100%;
+            color: white;
+            border: none;
+            padding: 16px;
+            font-size: 1rem;
+            font-weight: 600;
+            border-radius: 12px;
+            cursor: pointer;
+            margin-top: 24px;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            min-height: 56px;
+        }
+        .calc-btn:hover {
+            transform: translateY(-2px);
+        }
+        .fuel-theme .calc-btn:hover {
+            box-shadow: 0 6px 20px rgba(2, 132, 199, 0.3);
+        }
+        .ev-theme .calc-btn:hover {
+            box-shadow: 0 6px 20px rgba(22, 163, 74, 0.3);
+        }
+        .fuel-result {
+            background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+            border-left-color: #0284c7;
+        }
+        .ev-result {
+            background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+            border-left-color: #16a34a;
+        }
+        .result {
+            margin-top: 24px;
+            padding: 20px;
+            border-left: 4px solid;
+            border-radius: 12px;
+            display: none;
+        }
+        .result.visible {
+            display: block;
+            animation: slideUp 0.4s ease;
+        }
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .res-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            font-size: 0.95rem;
+            flex-wrap: wrap;
+            gap: 4px;
+        }
+        .fuel-result .res-row { color: #374151; }
+        .ev-result .res-row { color: #374151; }
+        .res-row.total {
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-top: 8px;
+            padding-top: 16px;
+            border-top-width: 1px;
+            border-top-style: solid;
+        }
+        .fuel-result .total {
+            color: #0c4a6e;
+            border-top-color: #bae6fd;
+        }
+        .ev-result .total {
+            color: #166534;
+            border-top-color: #bbf7d0;
+        }
+        .hidden {
+            display: none !important;
+        }
+        footer {
+            text-align: center;
+            margin-top: 32px;
+            font-size: 0.75rem;
+            color: #64748b;
+            padding-bottom: 80px;
+        }
+        footer .links {
+            margin-top: 8px;
+        }
+        footer a {
+            color: #0284c7;
+            text-decoration: none;
+            margin: 0 6px;
+        }
+        footer a:hover {
+            text-decoration: underline;
+        }
+        svg.icon {
+            width: 18px;
+            height: 18px;
+            flex-shrink: 0;
+        }
+        header svg.icon {
+            width: 28px;
+            height: 28px;
+        }
+        .cookie-banner {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: #ffffff;
+            padding: 16px;
+            box-shadow: 0 -2px 12px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            display: none;
+        }
+        .cookie-banner.show {
+            display: block;
+        }
+        .cookie-banner-content {
+            max-width: 100%;
+            margin: 0 auto;
+        }
+        .cookie-banner p {
+            font-size: 0.85rem;
+            color: #475569;
+            margin-bottom: 12px;
+            line-height: 1.5;
+        }
+        .cookie-buttons {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        .cookie-btn {
+            padding: 10px 20px;
+            border-radius: 8px;
+            border: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            min-height: 44px;
+        }
+        .cookie-btn.accept {
+            background: #0284c7;
+            color: white;
+        }
+        .cookie-btn.accept:hover {
+            background: #0369a1;
+        }
+        .cookie-btn.decline {
+            background: #e2e8f0;
+            color: #475569;
+        }
+        .cookie-btn.decline:hover {
+            background: #cbd5e1;
+        }
+
+        /* 📲 Tablet */
+        @media (min-width: 600px) {
+            body {
+                max-width: 600px;
+                padding: 24px;
+            }
+            header h1 {
+                font-size: 1.8rem;
+            }
+            .card {
+                padding: 24px;
+            }
+        }
+
+        /* 💻 PC / Laptop */
+        @media (min-width: 900px) {
+            body {
+                max-width: 680px;
+                padding: 32px 24px;
+            }
+            .info-box {
+                padding: 20px 24px;
+            }
+            .help-box {
+                padding: 20px;
+            }
+            .tabs {
+                gap: 16px;
+            }
+            .tab {
+                min-width: 160px;
+                padding: 16px 14px;
+            }
+            header svg.icon {
+                width: 32px;
+                height: 32px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="#0c4a6e" stroke-width="2">
+            <path d="M14 16H9"/>
+            <path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.5 17.2 10 16 10h-1.26l-1.5-2.5C12.3 6.5 11.5 6 10.5 6h-5c-.9 0-1.7.7-1.9 1.5L3 11v5c0 .6.4 1 1 1h2"/>
+            <circle cx="6.5" cy="17.5" r="1.5"/>
+            <circle cx="16.5" cy="17.5" r="1.5"/>
+        </svg>
+        Cost My Trip
+    </h1>
+    <p>Estimate your fuel and electricity costs for any journey</p>
+</header>
+
+<div class="info-box">
+    <h3>
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="#0c4a6e" stroke-width="2">
+            <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/>
+            <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
+        </svg>
+        About this tool
+    </h3>
+    <p>Cost My Trip is a free UK journey cost calculator. Estimate petrol, diesel and electric charging costs for any trip in seconds. Figures are for guidance only — actual prices and consumption may vary.</p>
+</div>
+
+<div class="info-box">
+    <h3>
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="#0c4a6e" stroke-width="2">
+            <line x1="8" y1="6" x2="21" y2="6"/>
+            <line x1="8" y1="12" x2="21" y2="12"/>
+            <line x1="8" y1="18" x2="21" y2="18"/>
+            <line x1="3" y1="6" x2="3.01" y2="6"/>
+            <line x1="3" y1="12" x2="3.01" y2="12"/>
+            <line x1="3" y1="18" x2="3.01" y2="18"/>
+        </svg>
+        How to use
+    </h3>
+    <p>1. Select your vehicle type: Petrol/Diesel or Electric<br>
+       2. Enter your journey distance in miles<br>
+       3. Enter your vehicle's consumption<br>
+       4. Enter the price — choose pence or pounds<br>
+       5. Click "Calculate Cost"</p>
+</div>
+
+<div class="card">
+    <div class="tabs">
+        <button class="tab active" id="tabFuel" onclick="showFuel()">
+            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/>
+            </svg>
+            Petrol / Diesel
+        </button>
+        <button class="tab" id="tabEv" onclick="showEv()">
+            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M13 2L4 14h7l-1 8 9-12h-7l1-8z"/>
+            </svg>
+            Electric
+        </button>
+    </div>
+
+    <div id="fuelWrapper" class="fuel-theme">
+        <div id="fuelSection">
+            <div class="help-box">
+                <h4>Typical MPG guide:</h4>
+                <div class="mpg-list">
+                    <div class="mpg-item"><span>Small Car</span><span>45–60 MPG</span></div>
+                    <div class="mpg-item"><span>Medium Car</span><span>35–50 MPG</span></div>
+                    <div class="mpg-item"><span>Small SUV</span><span>30–42 MPG</span></div>
+                    <div class="mpg-item"><span>Large SUV / 4x4</span><span>20–30 MPG</span></div>
+                    <div class="mpg-item"><span>Small Van</span><span>35–45 MPG</span></div>
+                    <div class="mpg-item"><span>Medium Van</span><span>28–38 MPG</span></div>
+                    <div class="mpg-item"><span>Large Van</span><span>22–30 MPG</span></div>
+                    <div class="mpg-item"><span>Small Lorry</span><span>15–25 MPG</span></div>
+                    <div class="mpg-item"><span>Large Lorry / HGV</span><span>8–12 MPG</span></div>
+                </div>
+            </div>
+
+            <label>
+                <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M21 10c0 6-9 13-9 13S3 16 3 10a9 9 0 0118 0z"/>
+                    <circle cx="12" cy="10" r="3"/>
+                </svg>
+                Distance (miles)
+            </label>
+            <input type="number" id="f_dist" placeholder="e.g. 100" step="any" min="0" style="width: 100%;">
+
+            <label>
+                <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M12 14l4-4"/>
+                    <path d="M3.34 19a10 10 0 1 1 17.32 0"/>
+                </svg>
+                Fuel consumption (MPG)
+            </label>
+            <input type="number" id="f_mpg" placeholder="e.g. 50" step="any" min="0" style="width: 100%;">
+
+            <label>
+                <span class="pound-icon">£</span>
+                Fuel price
+            </label>
+            <div class="input-row">
+                <select id="priceUnit" onchange="updatePlaceholder()">
+                    <option value="p" selected>p per litre</option>
+                    <option value="£">£ per litre</option>
+                </select>
+                <input type="text" id="f_price" placeholder="e.g. 128.9" inputmode="decimal">
+            </div>
+
+            <p class="note">1 UK Gallon = 4.546 Litres</p>
+
+            <button class="calc-btn" onclick="doCalc()">
+                <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M5 13l4 4L19 7"/>
+                </svg>
+                Calculate Cost
+            </button>
+        </div>
+    </div>
+
+    <div id="evWrapper" class="ev-theme hidden">
+        <div id="evSection">
+            <div class="help-box">
+                <h4>Typical miles per kWh guide:</h4>
+                <div class="mpg-list">
+                    <div class="mpg-item"><span>Small EV</span><span>3.0–4.0 mi/kWh</span></div>
+                    <div class="mpg-item"><span>Medium EV</span><span>2.7–3.5 mi/kWh</span></div>
+                    <div class="mpg-item"><span>Small Electric SUV</span><span>2.5–3.2 mi/kWh</span></div>
+                    <div class="mpg-item"><span>Large Electric SUV / 4x4</span><span>2.0–2.8 mi/kWh</span></div>
+                    <div class="mpg-item"><span>Small Electric Van</span><span>2.5–3.2 mi/kWh</span></div>
+                    <div class="mpg-item"><span>Medium Electric Van</span><span>2.2–2.8 mi/kWh</span></div>
+                    <div class="mpg-item"><span>Large Electric Van</span><span>2.0–2.5 mi/kWh</span></div>
+                    <div class="mpg-item"><span>Electric Small Lorry</span><span>1.5–2.0 mi/kWh</span></div>
+                </div>
+            </div>
+
+            <label>
+                <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M21 10c0 6-9 13-9 13S3 16 3 10a9 9 0 0118 0z"/>
+                    <circle cx="12" cy="10" r="3"/>
+                </svg>
+                Distance (miles)
+            </label>
+            <input type="number" id="e_dist" placeholder="e.g. 100" step="any" min="0" style="width: 100%;">
+
+            <label>
+                <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>
+                </svg>
+                Energy consumption
+            </label>
+            <input type="number" id="e_mpk" placeholder="e.g. 3.3" step="any" min="0" style="width: 100%;">
+
+            <label>
+                <span class="pound-icon">£</span>
+                Electricity cost
+            </label>
+            <div class="input-row">
+                <select id="ePriceUnit" onchange="updatePlaceholderEv()">
+                    <option value="p" selected>p per kWh</option>
+                    <option value="£">£ per kWh</option>
+                </select>
+                <input type="text" id="e_price" placeholder="e.g. 34" inputmode="decimal">
+            </div>
+
+            <p class="note">Prices vary — enter your local rate</p>
+
+            <button class="calc-btn" onclick="doCalc()">
+                <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M5 13l4 4L19 7"/>
+                </svg>
+                Calculate Cost
+            </button>
+        </div>
+    </div>
+
+    <div id="fuelRes" class="result fuel-result">
+        <div class="res-row">
+            <span>Fuel needed:</span>
+            <span id="r_fuel">0 litres</span>
+        </div>
+        <div class="res-row">
+            <span>Fuel cost:</span>
+            <span id="r_cost">£0.00</span>
+        </div>
+        <div class="res-row total">
+            <span>Total Cost:</span>
+            <span id="r_total_fuel">£0.00</span>
+        </div>
+    </div>
+
+    <div id="evRes" class="result ev-result">
+        <div class="res-row">
+            <span>Energy needed:</span>
+            <span id="r_energy">0 kWh</span>
+        </div>
+        <div class="res-row">
+            <span>Energy cost:</span>
+            <span id="r_ecost">£0.00</span>
+        </div>
+        <div class="res-row total">
+            <span>Total Cost:</span>
+            <span id="r_total_ev">£0.00</span>
+        </div>
+    </div>
+</div>
+
+<footer>
+    © <span id="year"></span> Cost My Trip • For guidance only
+    <div class="links">
+        <a href="/privacy.html">Privacy Policy</a> • <a href="/terms.html">Terms of Use</a> • <a href="/cookies.html">Cookies</a>
+    </div>
+</footer>
+
+<div id="cookieBanner" class="cookie-banner">
+    <div class="cookie-banner-content">
+        <p>We use essential cookies to make this site work. With your consent we also use Google Analytics (analytics) and Google AdSense (advertising) cookies. You can accept or decline — the calculator works either way. See our <a href="/cookies.html" style="color:#0284c7;text-decoration:underline;">Cookie Policy</a>.</p>
+        <div class="cookie-buttons">
+            <button class="cookie-btn accept" onclick="acceptCookies()">Accept</button>
+            <button class="cookie-btn decline" onclick="declineCookies()">Decline</button>
+        </div>
+    </div>
+</div>
+
+<script>
+const LITRES_PER_GALLON = 4.54609;
+
+document.getElementById('year').textContent = new Date().getFullYear();
+
+function parsePrice(val) {
+    let v = String(val).replace(/£/g, '').replace(/\s/g, '');
+    if (v.indexOf(',') !== -1 && v.indexOf('.') !== -1) {
+        v = v.replace(/,/g, '');          // comma = thousand separator
+    } else {
+        v = v.replace(/,/g, '.');         // comma = decimal separator
+    }
+    return parseFloat(v);
+}
+
+function updatePlaceholder() {
+    const unit = document.getElementById('priceUnit').value;
+    const input = document.getElementById('f_price');
+    input.placeholder = unit === 'p' ? 'e.g. 128.9' : 'e.g. 1.28';
+}
+
+function updatePlaceholderEv() {
+    const unit = document.getElementById('ePriceUnit').value;
+    const input = document.getElementById('e_price');
+    input.placeholder = unit === 'p' ? 'e.g. 34' : 'e.g. 0.34';
+}
+
+function showFuel() {
+    document.getElementById('tabFuel').classList.add('active');
+    document.getElementById('tabEv').classList.remove('active');
+    document.getElementById('fuelWrapper').classList.remove('hidden');
+    document.getElementById('evWrapper').classList.add('hidden');
+    document.getElementById('fuelRes').classList.remove('visible');
+    document.getElementById('evRes').classList.remove('visible');
+}
+
+function showEv() {
+    document.getElementById('tabEv').classList.add('active');
+    document.getElementById('tabFuel').classList.remove('active');
+    document.getElementById('evWrapper').classList.remove('hidden');
+    document.getElementById('fuelWrapper').classList.add('hidden');
+    document.getElementById('evRes').classList.remove('visible');
+    document.getElementById('fuelRes').classList.remove('visible');
+}
+
+function doCalc() {
+    if (!document.getElementById('fuelWrapper').classList.contains('hidden')) {
+        let miles = parseFloat(document.getElementById('f_dist').value);
+        let mpg = parseFloat(document.getElementById('f_mpg').value);
+        let priceUnit = document.getElementById('priceUnit').value;
+        let pricePerLitre = parsePrice(document.getElementById('f_price').value);
+        
+        if (isNaN(miles) || miles < 0 || isNaN(mpg) || mpg <= 0 || isNaN(pricePerLitre) || pricePerLitre < 0) {
+            alert('⚠️ Please fill in all fields with valid numbers!');
+            return;
+        }
+        
+        if (priceUnit === 'p') {
+            pricePerLitre = pricePerLitre / 100;
+        }
+        
+        let gallonsUsed = miles / mpg;
+        let litresUsed = gallonsUsed * LITRES_PER_GALLON;
+        let total = litresUsed * pricePerLitre;
+        
+        document.getElementById('r_fuel').textContent = litresUsed.toFixed(2) + ' litres (' + gallonsUsed.toFixed(2) + ' gallons)';
+        document.getElementById('r_cost').textContent = '£' + total.toFixed(2);
+        document.getElementById('r_total_fuel').textContent = '£' + total.toFixed(2);
+        document.getElementById('fuelRes').classList.add('visible');
+        document.getElementById('evRes').classList.remove('visible');
+    } else {
+        let miles = parseFloat(document.getElementById('e_dist').value);
+        let milesPerKwh = parseFloat(document.getElementById('e_mpk').value);
+        let ePriceUnit = document.getElementById('ePriceUnit').value;
+        let pricePerKwh = parsePrice(document.getElementById('e_price').value);
+        
+        if (isNaN(miles) || miles < 0 || isNaN(milesPerKwh) || milesPerKwh <= 0 || isNaN(pricePerKwh) || pricePerKwh < 0) {
+            alert('⚠️ Please fill in all fields with valid numbers!');
+            return;
+        }
+        
+        if (ePriceUnit === 'p') {
+            pricePerKwh = pricePerKwh / 100;
+        }
+        
+        let kwhNeeded = miles / milesPerKwh;
+        let total = kwhNeeded * pricePerKwh;
+        
+        document.getElementById('r_energy').textContent = kwhNeeded.toFixed(1) + ' kWh';
+        document.getElementById('r_ecost').textContent = '£' + total.toFixed(2);
+        document.getElementById('r_total_ev').textContent = '£' + total.toFixed(2);
+        document.getElementById('evRes').classList.add('visible');
+        document.getElementById('fuelRes').classList.remove('visible');
+    }
+}
+
+function setCookie(name, value, days) {
+    const date = new Date();
+    date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+    const expires = '; expires=' + date.toUTCString();
+    document.cookie = name + '=' + (value || '') + expires + '; path=/; SameSite=Lax';
+}
+
+function getCookie(name) {
+    const nameEQ = name + '=';
+    const ca = document.cookie.split(';');
+    for (let i = 0; i < ca.length; i++) {
+        let c = ca[i];
+        while (c.charAt(0) === ' ') c = c.substring(1, c.length);
+        if (c.indexOf(nameEQ) === 0) return c.substring(nameEQ.length, c.length);
+    }
+    return null;
+}
+
+function grantConsent() {
+    if (typeof gtag === 'function') {
+        gtag('consent', 'update', {
+            'ad_storage': 'granted',
+            'ad_user_data': 'granted',
+            'ad_personalization': 'granted',
+            'analytics_storage': 'granted'
+        });
+    }
+}
+
+function denyConsent() {
+    if (typeof gtag === 'function') {
+        gtag('consent', 'update', {
+            'ad_storage': 'denied',
+            'ad_user_data': 'denied',
+            'ad_personalization': 'denied',
+            'analytics_storage': 'denied'
+        });
+    }
+}
+
+function applyConsent() {
+    const choice = getCookie('cookieConsent');
+    if (choice === 'accepted') grantConsent();
+    else if (choice === 'declined') denyConsent();
+}
+
+function showCookieBanner() {
+    const banner = document.getElementById('cookieBanner');
+    if (!getCookie('cookieConsent')) {
+        banner.classList.add('show');
+    }
+}
+
+function acceptCookies() {
+    setCookie('cookieConsent', 'accepted', 180);
+    grantConsent();
+    document.getElementById('cookieBanner').classList.remove('show');
+}
+
+function declineCookies() {
+    setCookie('cookieConsent', 'declined', 180);
+    denyConsent();
+    document.getElementById('cookieBanner').classList.remove('show');
+}
+
+applyConsent();
+showCookieBanner();
+</script>
+
+</body>
+</html>
