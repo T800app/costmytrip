@@ -47,14 +47,35 @@
         footer a { color: #0284c7; text-decoration: none; margin: 0 6px; }
         footer a:hover { text-decoration: underline; }
         svg.icon { width: 32px; height: 32px; }
-        .cookie-banner { position: fixed; bottom: 0; left: 0; right: 0; background: #ffffff; padding: 16px; box-shadow: 0 -2px 12px rgba(0,0,0,0.1); z-index: 1000; display: none; }
+        .cookie-banner {
+            position: fixed;
+            bottom: 12px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: calc(100% - 24px);
+            max-width: 600px;
+            box-sizing: border-box;
+            background: #ffffff;
+            padding: 16px;
+            border-radius: 16px;
+            box-shadow: 0 2px 16px rgba(0, 0, 0, 0.15);
+            z-index: 1000;
+            display: none;
+        }
         .cookie-banner.show { display: block; }
-        .cookie-banner-content { max-width: 600px; margin: 0 auto; }
-        .cookie-banner p { font-size: 0.85rem; color: #475569; margin-bottom: 12px; line-height: 1.5; }
+        .cookie-banner-content { max-width: 100%; }
+        .cookie-banner p { font-size: 0.85rem; color: #475569; margin: 0; line-height: 1.5; }
+        .cookie-text-row { display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px; }
+        .cookie-icon { width: 28px; height: 28px; flex-shrink: 0; margin-top: 2px; }
         .cookie-buttons { display: flex; gap: 10px; flex-wrap: wrap; }
-        .cookie-btn { padding: 10px 20px; border-radius: 8px; border: none; font-size: 0.9rem; font-weight: 500; cursor: pointer; }
+        .cookie-btn { padding: 10px 20px; border-radius: 8px; border: none; font-size: 0.9rem; font-weight: 500; cursor: pointer; min-height: 44px; }
         .cookie-btn.accept { background: #0284c7; color: white; }
         .cookie-btn.decline { background: #e2e8f0; color: #475569; }
+        @media (max-width: 480px) {
+            .cookie-text-row { flex-direction: column; align-items: center; text-align: center; }
+            .cookie-buttons { flex-direction: column; }
+            .cookie-btn { width: 100%; }
+        }
     </style>
 </head>
 <body>
@@ -106,7 +127,17 @@
 
 <div id="cookieBanner" class="cookie-banner">
     <div class="cookie-banner-content">
-        <p>We use essential cookies to make this site work. With your consent we also use Google Analytics (analytics) and Google AdSense (advertising) cookies. You can accept or decline — the calculator works either way. See our <a href="/cookies.html" style="color:#0284c7;text-decoration:underline;">Cookie Policy</a>.</p>
+        <div class="cookie-text-row">
+            <svg class="cookie-icon" viewBox="0 0 24 24" fill="none" stroke="#0284c7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 2a10 10 0 1 0 10 10 4 4 0 0 1-5-5 4 4 0 0 1-5-5z"/>
+                <path d="M8.5 8.5v.01"/>
+                <path d="M16 15.5v.01"/>
+                <path d="M12 12v.01"/>
+                <path d="M11 17v.01"/>
+                <path d="M7 14v.01"/>
+            </svg>
+            <p>We use essential cookies to make this site work. With your consent we also use Google Analytics (analytics) and Google AdSense (advertising) cookies. You can accept or decline — the calculator works either way. See our <a href="/cookies.html" style="color:#0284c7;text-decoration:underline;">Cookie Policy</a>.</p>
+        </div>
         <div class="cookie-buttons">
             <button class="cookie-btn accept" onclick="acceptCookies()">Accept</button>
             <button class="cookie-btn decline" onclick="declineCookies()">Decline</button>
