@@ -80,33 +80,43 @@
             .cookie-btn { width: 100%; }
         }
 
-        /* ===== JS AI Assistant Widget ===== */
-        .ai-fab { position: fixed; bottom: 16px; right: 16px; width: 56px; height: 56px; border-radius: 50%; background: linear-gradient(135deg, #0284c7, #0c4a6e); color: #fff; border: none; cursor: pointer; z-index: 999; box-shadow: 0 4px 16px rgba(12,74,110,0.4); display: flex; align-items: center; justify-content: center; transition: transform 0.2s ease; }
-        .ai-fab:hover { transform: scale(1.08); }
-        .ai-fab svg { width: 26px; height: 26px; }
-        .ai-panel { position: fixed; bottom: 84px; right: 16px; width: 340px; max-width: calc(100vw - 32px); height: 480px; max-height: calc(100vh - 120px); background: #fff; border-radius: 16px; box-shadow: 0 8px 32px rgba(0,0,0,0.18); z-index: 999; display: none; flex-direction: column; overflow: hidden; }
+        /* ===== Cost My Trip Assistant Widget (v2, responsive) ===== */
+        .ai-fab { position: fixed; bottom: 18px; right: 18px; width: 58px; height: 58px; border-radius: 50%; background: linear-gradient(135deg, #0284c7, #0c4a6e); color: #fff; border: none; cursor: pointer; z-index: 9999; box-shadow: 0 6px 20px rgba(12,74,110,0.45); display: flex; align-items: center; justify-content: center; transition: transform 0.25s ease, box-shadow 0.25s ease; }
+        .ai-fab:hover { transform: scale(1.1); box-shadow: 0 8px 24px rgba(12,74,110,0.55); }
+        .ai-fab svg { width: 28px; height: 28px; }
+        .ai-panel { position: fixed; bottom: 88px; right: 18px; width: 360px; max-width: calc(100vw - 36px); height: 520px; max-height: calc(100vh - 110px); background: #fff; border-radius: 18px; box-shadow: 0 12px 40px rgba(0,0,0,0.22); z-index: 9999; display: none; flex-direction: column; overflow: hidden; animation: aiSlideUp 0.25s ease; }
         .ai-panel.open { display: flex; }
-        .ai-header { background: linear-gradient(135deg, #0284c7, #0c4a6e); color: #fff; padding: 14px 16px; display: flex; align-items: center; justify-content: space-between; }
-        .ai-header-title { font-weight: 700; font-size: 0.95rem; display: flex; align-items: center; gap: 8px; }
-        .ai-header-title svg { width: 18px; height: 18px; }
-        .ai-header-actions { display: flex; gap: 12px; align-items: center; }
-        .ai-header button { background: none; border: none; color: #fff; cursor: pointer; font-size: 0.8rem; opacity: 0.9; }
+        @keyframes aiSlideUp { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+        .ai-header { background: linear-gradient(135deg, #0284c7, #0c4a6e); color: #fff; padding: 14px 16px; display: flex; align-items: center; justify-content: space-between; flex-shrink: 0; }
+        .ai-header-title { font-weight: 700; font-size: 0.98rem; display: flex; align-items: center; gap: 9px; }
+        .ai-header-title svg { width: 20px; height: 20px; flex-shrink: 0; }
+        .ai-header-actions { display: flex; gap: 14px; align-items: center; }
+        .ai-header button { background: none; border: none; color: #fff; cursor: pointer; font-size: 0.82rem; opacity: 0.9; padding: 2px; }
         .ai-header button:hover { opacity: 1; }
-        .ai-messages { flex: 1; overflow-y: auto; padding: 14px; background: #f8fafc; display: flex; flex-direction: column; gap: 10px; }
-        .ai-msg { max-width: 85%; padding: 10px 12px; border-radius: 12px; font-size: 0.88rem; line-height: 1.5; white-space: pre-wrap; word-wrap: break-word; }
+        .ai-messages { flex: 1; overflow-y: auto; padding: 14px; background: #f1f5f9; display: flex; flex-direction: column; gap: 10px; -webkit-overflow-scrolling: touch; }
+        .ai-msg { max-width: 86%; padding: 10px 13px; border-radius: 14px; font-size: 0.9rem; line-height: 1.55; white-space: pre-wrap; word-wrap: break-word; }
         .ai-msg.user { align-self: flex-end; background: #0284c7; color: #fff; border-bottom-right-radius: 4px; }
         .ai-msg.bot { align-self: flex-start; background: #fff; color: #1e293b; border: 1px solid #e2e8f0; border-bottom-left-radius: 4px; }
-        .ai-typing { align-self: flex-start; background: #fff; border: 1px solid #e2e8f0; padding: 10px 14px; border-radius: 12px; display: none; }
-        .ai-typing span { display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: #94a3b8; margin: 0 2px; animation: aiBounce 1.2s infinite; }
+        .ai-typing { align-self: flex-start; background: #fff; border: 1px solid #e2e8f0; padding: 10px 14px; border-radius: 14px; display: none; }
+        .ai-typing span { display: inline-block; width: 7px; height: 7px; border-radius: 50%; background: #94a3b8; margin: 0 2px; animation: aiBounce 1.2s infinite; }
         .ai-typing span:nth-child(2) { animation-delay: 0.15s; }
         .ai-typing span:nth-child(3) { animation-delay: 0.3s; }
         @keyframes aiBounce { 0%,60%,100% { transform: translateY(0); opacity: 0.5; } 30% { transform: translateY(-5px); opacity: 1; } }
-        .ai-input-row { display: flex; gap: 8px; padding: 10px; border-top: 1px solid #e2e8f0; background: #fff; }
-        .ai-input { flex: 1; padding: 10px 12px; border: 1px solid #cbd5e1; border-radius: 10px; font-size: 0.88rem; outline: none; }
-        .ai-input:focus { border-color: #0284c7; }
-        .ai-send { background: #0284c7; color: #fff; border: none; border-radius: 10px; padding: 0 16px; cursor: pointer; font-weight: 600; font-size: 0.88rem; }
+        .ai-input-row { display: flex; gap: 8px; padding: 10px; border-top: 1px solid #e2e8f0; background: #fff; flex-shrink: 0; }
+        .ai-input { flex: 1; padding: 12px 14px; border: 1px solid #cbd5e1; border-radius: 12px; font-size: 0.92rem; outline: none; min-height: 44px; }
+        .ai-input:focus { border-color: #0284c7; box-shadow: 0 0 0 3px rgba(2,132,199,0.15); }
+        .ai-send { background: #0284c7; color: #fff; border: none; border-radius: 12px; padding: 0 18px; cursor: pointer; font-weight: 600; font-size: 0.9rem; min-height: 44px; }
         .ai-send:hover { background: #0369a1; }
-        @media (max-width: 480px) { .ai-panel { width: calc(100vw - 24px); right: 12px; bottom: 80px; height: 70vh; } .ai-fab { width: 50px; height: 50px; bottom: 12px; right: 12px; } }
+        /* Tablet (480-768px) */
+        @media (min-width: 481px) and (max-width: 768px) { .ai-panel { width: 340px; height: 480px; } }
+        /* Mobile (<=480px) */
+        @media (max-width: 480px) {
+            .ai-fab { width: 52px; height: 52px; bottom: 14px; right: 14px; }
+            .ai-fab svg { width: 25px; height: 25px; }
+            .ai-panel { width: calc(100vw - 24px); right: 12px; left: 12px; bottom: 78px; height: 68vh; max-height: calc(100vh - 90px); border-radius: 16px; }
+            .ai-header-title { font-size: 0.92rem; }
+            .ai-msg { font-size: 0.88rem; }
+        }
     </style>
 </head>
 <body>
@@ -250,14 +260,14 @@ showCookieBanner();
 </script>
 
 
-<!-- JS AI Assistant Widget -->
+<!-- Cost My Trip Assistant Widget (v2) -->
 <button class="ai-fab" id="aiFab" aria-label="Ask trip cost assistant" title="Ask Cost My Trip Assistant">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9L12 3z"/><path d="M19 15l.8 2.2L22 18l-2.2.8L19 21l-.8-2.2L16 18l2.2-.8L19 15z"/></svg>
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 17h14"/><circle cx="7.5" cy="17.5" r="1.8"/><circle cx="16.5" cy="17.5" r="1.8"/><path d="M3 17v-4.5L5.5 8h9l3 4.5V17"/><path d="M5.5 12.5h10"/></svg>
 </button>
 <div class="ai-panel" id="aiPanel">
     <div class="ai-header">
         <div class="ai-header-title">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9L12 3z"/></svg>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 17h14"/><circle cx="7.5" cy="17.5" r="1.8"/><circle cx="16.5" cy="17.5" r="1.8"/><path d="M3 17v-4.5L5.5 8h9l3 4.5V17"/><path d="M5.5 12.5h10"/></svg>
             Cost My Trip Assistant
         </div>
         <div class="ai-header-actions">
@@ -266,7 +276,7 @@ showCookieBanner();
         </div>
     </div>
     <div class="ai-messages" id="aiMessages">
-        <div class="ai-msg bot">Hi! I'm your trip cost assistant. Ask me how much a trip costs — e.g. "How much for 120 miles in a petrol car?" or "Petrol vs electric for 200 miles?" I'll use the site's exact calculator logic! &#128663;</div>
+        <div class="ai-msg bot">Hi! I'm your trip cost assistant. Ask me how much a trip costs — e.g. "How much for 120 miles in a petrol car?" or "Petrol vs electric for 200 miles?" I use the site's exact UK calculator logic! &#128663;</div>
     </div>
     <div class="ai-typing" id="aiTyping"><span></span><span></span><span></span></div>
     <div class="ai-input-row">
