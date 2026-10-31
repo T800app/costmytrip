@@ -107,6 +107,34 @@
         .ai-input:focus { border-color: #0284c7; }
         .ai-send { background: #0284c7; color: #fff; border: none; border-radius: 10px; padding: 0 clamp(12px, 3vw, 16px); cursor: pointer; font-weight: 600; font-size: clamp(0.82rem, 2vw, 0.9rem); min-height: 42px; }
         .ai-send:hover { background: #0369a1; }
+
+        /* ===== Cost My Trip Assistant Widget (v4, fluid responsive) ===== */
+        .ai-fab { position: fixed; bottom: clamp(12px, 2vw, 18px); right: clamp(12px, 2vw, 18px); width: clamp(48px, 12vw, 56px); height: clamp(48px, 12vw, 56px); border-radius: 50%; background: linear-gradient(135deg, #0284c7, #0c4a6e); color: #fff; border: none; cursor: pointer; z-index: 9999; box-shadow: 0 2px 10px rgba(12,74,110,0.20); display: flex; align-items: center; justify-content: center; transition: transform 0.25s ease; }
+        .ai-fab:hover { transform: scale(1.1); }
+        .ai-fab svg { width: clamp(22px, 5vw, 28px); height: clamp(22px, 5vw, 28px); }
+        .ai-panel { position: fixed; bottom: calc(clamp(48px, 12vw, 56px) + clamp(14px, 2.5vw, 22px)); right: clamp(12px, 2vw, 18px); width: min(340px, calc(100vw - clamp(24px, 5vw, 40px))); height: min(480px, calc(100vh - clamp(90px, 18vh, 130px))); background: #fff; border-radius: 16px; box-shadow: 0 6px 24px rgba(15,23,42,0.10); z-index: 9999; display: none; flex-direction: column; overflow: hidden; animation: aiSlideUp 0.25s ease; }
+        .ai-panel.open { display: flex; }
+        @keyframes aiSlideUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .ai-header { background: linear-gradient(135deg, #0284c7, #0c4a6e); color: #fff; padding: clamp(10px, 2vw, 14px) clamp(12px, 2.5vw, 16px); display: flex; align-items: center; justify-content: space-between; flex-shrink: 0; }
+        .ai-header-title { font-weight: 700; font-size: clamp(0.84rem, 2.2vw, 0.95rem); display: flex; align-items: center; gap: 8px; }
+        .ai-header-title svg { width: clamp(18px, 4.5vw, 22px); height: clamp(18px, 4.5vw, 22px); flex-shrink: 0; }
+        .ai-header-actions { display: flex; gap: 12px; align-items: center; }
+        .ai-header button { background: none; border: none; color: #fff; cursor: pointer; font-size: 0.8rem; opacity: 0.9; padding: 2px; }
+        .ai-header button:hover { opacity: 1; }
+        .ai-messages { flex: 1; overflow-y: auto; padding: clamp(10px, 2vw, 14px); background: #f1f5f9; display: flex; flex-direction: column; gap: 8px; -webkit-overflow-scrolling: touch; }
+        .ai-msg { max-width: 86%; padding: clamp(8px, 1.8vw, 10px) clamp(10px, 2vw, 12px); border-radius: 12px; font-size: clamp(0.82rem, 2vw, 0.9rem); line-height: 1.5; white-space: pre-wrap; word-wrap: break-word; }
+        .ai-msg.user { align-self: flex-end; background: #0284c7; color: #fff; border-bottom-right-radius: 4px; }
+        .ai-msg.bot { align-self: flex-start; background: #fff; color: #1e293b; border: 1px solid #e2e8f0; border-bottom-left-radius: 4px; }
+        .ai-typing { align-self: flex-start; background: #fff; border: 1px solid #e2e8f0; padding: 9px 12px; border-radius: 12px; display: none; }
+        .ai-typing span { display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: #94a3b8; margin: 0 2px; animation: aiBounce 1.2s infinite; }
+        .ai-typing span:nth-child(2) { animation-delay: 0.15s; }
+        .ai-typing span:nth-child(3) { animation-delay: 0.3s; }
+        @keyframes aiBounce { 0%,60%,100% { transform: translateY(0); opacity: 0.5; } 30% { transform: translateY(-4px); opacity: 1; } }
+        .ai-input-row { display: flex; gap: 8px; padding: clamp(8px, 1.8vw, 10px); border-top: 1px solid #e2e8f0; background: #fff; flex-shrink: 0; }
+        .ai-input { flex: 1; padding: clamp(9px, 2vw, 11px) clamp(11px, 2.2vw, 13px); border: 1px solid #cbd5e1; border-radius: 10px; font-size: clamp(0.84rem, 2vw, 0.9rem); outline: none; min-height: 42px; }
+        .ai-input:focus { border-color: #0284c7; }
+        .ai-send { background: #0284c7; color: #fff; border: none; border-radius: 10px; padding: 0 clamp(12px, 3vw, 16px); cursor: pointer; font-weight: 600; font-size: clamp(0.82rem, 2vw, 0.9rem); min-height: 42px; }
+        .ai-send:hover { background: #0369a1; }
     </style>
 </head>
 <body>
@@ -247,6 +275,101 @@ applyConsent();
 showCookieBanner();
 </script>
 
+
+<!-- Cost My Trip Assistant Widget (v4 fluid) -->
+<button class="ai-fab" id="aiFab" aria-label="Ask trip cost assistant" title="Ask Cost My Trip Assistant">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 16H9"/><path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.5 17.2 10 16 10h-1.26l-1.5-2.5C12.3 6.5 11.5 6 10.5 6h-5c-.9 0-1.7.7-1.9 1.5L3 11v5c0 .6.4 1 1 1h2"/><circle cx="6.5" cy="17.5" r="1.5"/><circle cx="16.5" cy="17.5" r="1.5"/></svg>
+</button>
+<div class="ai-panel" id="aiPanel">
+    <div class="ai-header">
+        <div class="ai-header-title">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 16H9"/><path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.5 17.2 10 16 10h-1.26l-1.5-2.5C12.3 6.5 11.5 6 10.5 6h-5c-.9 0-1.7.7-1.9 1.5L3 11v5c0 .6.4 1 1 1h2"/><circle cx="6.5" cy="17.5" r="1.5"/><circle cx="16.5" cy="17.5" r="1.5"/></svg>
+            Cost My Trip Assistant
+        </div>
+        <div class="ai-header-actions">
+            <button id="aiHide" title="Hide assistant">Hide</button>
+            <button id="aiClose" title="Minimize">&times;</button>
+        </div>
+    </div>
+    <div class="ai-messages" id="aiMessages">
+        <div class="ai-msg bot">Hi! I'm your trip cost assistant. Ask me how much a trip costs — e.g. "How much for 120 miles in a petrol car?" or "Petrol vs electric for 200 miles?" I use the site's exact UK calculator logic! &#128663;</div>
+    </div>
+    <div class="ai-typing" id="aiTyping"><span></span><span></span><span></span></div>
+    <div class="ai-input-row">
+        <input class="ai-input" id="aiInput" placeholder="Ask e.g. How much for 100 miles?" />
+        <button class="ai-send" id="aiSend">Send</button>
+    </div>
+</div>
+
+<script>
+(function(){
+    var LPG = 4.54609;
+    var DEF = { mpg: 45, fuelPrice: 1.45, mpk: 4, elecPrice: 0.27 };
+    function parse(text){
+        var t = text.toLowerCase();
+        var o = { dist:null, ft:null, mpg:null, fp:null, mpk:null, ep:null, cmp:false };
+        var m = t.match(/(\d+(?:\.\d+)?)\s*(miles?|mi)\b/); if(m) o.dist=parseFloat(m[1]);
+        if(/electric|\bev\b|electrical/.test(t)) o.ft="electric";
+        else if(/diesel/.test(t)) o.ft="diesel";
+        else if(/petrol|\bgas\b|gasoline/.test(t)) o.ft="petrol";
+        if(/cheaper|compare|\bvs\b|versus|which (is|one)|best|better/.test(t) && /(petrol|diesel|gas).*(electric|ev)|(electric|ev).*(petrol|diesel|gas)/.test(t)) o.cmp=true;
+        m = t.match(/(\d+(?:\.\d+)?)\s*mpg/); if(m) o.mpg=parseFloat(m[1]);
+        m = t.match(/£\s*(\d+(?:\.\d+)?)\s*(?:per|\/|a)\s*l(?:itre)?/); if(m) o.fp=parseFloat(m[1]);
+        m = t.match(/(\d+(?:\.\d+)?)\s*p(?:ence)?\s*(?:per|\/|a)\s*l(?:itre)?/); if(m) o.fp=parseFloat(m[1])/100;
+        m = t.match(/£\s*(\d+(?:\.\d+)?)\s*(?:per|\/|a)\s*kwh/); if(m) o.ep=parseFloat(m[1]);
+        m = t.match(/(\d+(?:\.\d+)?)\s*p(?:ence)?\s*(?:per|\/|a)\s*kwh/); if(m) o.ep=parseFloat(m[1])/100;
+        m = t.match(/(\d+(?:\.\d+)?)\s*miles?\s*(?:per|\/|a)\s*kwh/); if(m) o.mpk=parseFloat(m[1]);
+        return o;
+    }
+    function calc(dist, ft, p){
+        if(ft==="electric"){
+            var mpk=p.mpk||DEF.mpk, ep=p.ep||DEF.elecPrice, kwh=dist/mpk, c=kwh*ep;
+            return { cost:c, detail:dist+" miles at "+mpk+" mi/kWh = "+kwh.toFixed(1)+" kWh x £"+ep.toFixed(2)+"/kWh", ft:"electric", kwh:kwh };
+        } else {
+            var mpg=p.mpg||DEF.mpg, fp=p.fp||DEF.fuelPrice, litres=(dist/mpg)*LPG, c2=litres*fp;
+            return { cost:c2, detail:dist+" miles at "+mpg+" MPG = "+litres.toFixed(1)+" litres x £"+fp.toFixed(2)+"/L", ft:ft||"petrol", litres:litres };
+        }
+    }
+    function respond(text){
+        var t=text.toLowerCase().trim();
+        if(/^(hi|hello|hey|good (morning|afternoon|evening))\b/.test(t)) return "Hi! Ask me how much a trip costs — e.g. 'How much for 120 miles?' or 'Petrol vs electric for 200 miles?' For exact figures, use the calculator above!";
+        if(/thank|thanks|cheers/.test(t)) return "You're welcome! Safe travels! Use the calculator above for exact results.";
+        if(/help|what can you do|how do (you|this) work|instructions/.test(t)) return "I estimate trip fuel costs using the site's exact UK calculator logic! Try:\n• 'How much for 100 miles?'\n• 'Petrol vs electric for 200 miles?'\n• '150 miles at 50 MPG, £1.50 per litre'\nFor exact results, use the calculator above.";
+        var p=parse(text);
+        if(!p.dist){
+            if(/(london|bristol|edinburgh|manchester|birmingham|leeds|glasgow|liverpool|cardiff|belfast|cambridge|oxford|brighton|bournemouth|york|newcastle|nottingham|leicester|coventry|southampton|portsmouth|plymouth|exeter|swansea|aberdeen|dundee|norwich|derby|sheffield|reading|luton|stansted|gatwick|heathrow)\b.*\b(to|and|or|\-)\b.*(london|bristol|edinburgh|manchester|birmingham|leeds|glasgow|liverpool|cardiff|belfast|cambridge|oxford|brighton|bournemouth|york|newcastle|nottingham|leicester|coventry|southampton|portsmouth|plymouth|exeter|swansea|aberdeen|dundee|norwich|derby|sheffield|reading|luton|stansted|gatwick|heathrow)\b/.test(t))
+                return "I need the distance in miles to calculate! Check it on Google Maps, then ask me e.g. 'How much for 120 miles?' Or enter it in the calculator above.";
+            return "I can estimate trip costs! Tell me the distance in miles — e.g. 'How much for 100 miles in a petrol car?' For exact figures, use the calculator above.";
+        }
+        var d=p.dist;
+        if(p.cmp || (!p.ft && /cheaper|compare|\bvs\b|versus|which|best|better|or\b/.test(t))){
+            var pet=calc(d,"petrol",p), ele=calc(d,"electric",p);
+            var ch = pet.cost<ele.cost ? "Petrol" : (ele.cost<pet.cost ? "Electric" : "About the same");
+            return "For a "+d+"-mile trip:\n• Petrol (~"+(p.mpg||DEF.mpg)+" MPG, £"+(p.fp||DEF.fuelPrice).toFixed(2)+"/L): £"+pet.cost.toFixed(2)+" ("+pet.litres.toFixed(1)+" L)\n• Electric (~"+(p.mpk||DEF.mpk)+" mi/kWh, £"+(p.ep||DEF.elecPrice).toFixed(2)+"/kWh): £"+ele.cost.toFixed(2)+" ("+ele.kwh.toFixed(1)+" kWh)\n→ "+(ch==="About the same"?"They cost about the same!":ch+" is cheaper by £"+Math.abs(pet.cost-ele.cost).toFixed(2)+"!")+"\nUse the calculator above for exact figures.";
+        }
+        var ft=p.ft||"petrol", r=calc(d,ft,p);
+        var tip = ft==="electric" ? "" : " Tip: an EV may cost less — compare with the calculator above!";
+        return "A "+d+"-mile trip in a "+ft+" car costs approximately £"+r.cost.toFixed(2)+".\n("+r.detail+")"+tip+"\nFor exact results, use the calculator above.";
+    }
+    var fab=document.getElementById("aiFab"), panel=document.getElementById("aiPanel"),
+        msgs=document.getElementById("aiMessages"), input=document.getElementById("aiInput"),
+        send=document.getElementById("aiSend"), typing=document.getElementById("aiTyping"),
+        closeBtn=document.getElementById("aiClose"), hideBtn=document.getElementById("aiHide");
+    if(localStorage.getItem("aiHidden")==="1") fab.style.display="none";
+    fab.addEventListener("click",function(){ panel.classList.toggle("open"); if(panel.classList.contains("open")) input.focus(); });
+    closeBtn.addEventListener("click",function(){ panel.classList.remove("open"); });
+    hideBtn.addEventListener("click",function(){ panel.classList.remove("open"); fab.style.display="none"; localStorage.setItem("aiHidden","1"); });
+    function render(text,who){ var d=document.createElement("div"); d.className="ai-msg "+who; d.textContent=text; msgs.appendChild(d); msgs.scrollTop=msgs.scrollHeight; }
+    function sendMsg(text){
+        if(!text.trim()) return;
+        render(text,"user"); input.value="";
+        typing.style.display="block"; msgs.scrollTop=msgs.scrollHeight;
+        setTimeout(function(){ typing.style.display="none"; render(respond(text),"bot"); }, 600);
+    }
+    send.addEventListener("click",function(){ sendMsg(input.value); });
+    input.addEventListener("keydown",function(e){ if(e.key==="Enter") sendMsg(input.value); });
+})();
+</script>
 
 <!-- Cost My Trip Assistant Widget (v4 fluid) -->
 <button class="ai-fab" id="aiFab" aria-label="Ask trip cost assistant" title="Ask Cost My Trip Assistant">
