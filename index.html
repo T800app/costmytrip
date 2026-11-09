@@ -92,6 +92,91 @@
             font-size: 0.9rem;
             line-height: 1.6;
         }
+
+        /* ===== Collapsible guide / SEO article (accordion) ===== */
+        .article-box {
+            background: #ffffff;
+            border-radius: 16px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 12px rgba(148, 163, 184, 0.1);
+            overflow: hidden;
+        }
+        .article-box summary {
+            list-style: none;
+            cursor: pointer;
+            padding: 14px 18px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #0c4a6e;
+            font-weight: 600;
+            font-size: 0.92rem;
+            line-height: 1.4;
+            min-height: 48px;
+            user-select: none;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .article-box summary::-webkit-details-marker { display: none; }
+        .article-box summary .art-icon {
+            width: 18px;
+            height: 18px;
+            flex-shrink: 0;
+        }
+        .article-box summary .chev {
+            margin-left: auto;
+            width: 18px;
+            height: 18px;
+            flex-shrink: 0;
+            color: #0284c7;
+            transition: transform 0.25s ease;
+        }
+        .article-box[open] summary .chev { transform: rotate(180deg); }
+        .article-body {
+            padding: 2px 18px 18px;
+            color: #475569;
+            font-size: 0.88rem;
+            line-height: 1.7;
+            overflow-wrap: break-word;
+            word-wrap: break-word;
+        }
+        .article-body h3 {
+            color: #0c4a6e;
+            font-size: 0.93rem;
+            font-weight: 600;
+            margin: 16px 0 6px;
+        }
+        .article-body p { margin-bottom: 10px; }
+        .article-body ul, .article-body ol { margin: 0 0 10px 18px; }
+        .article-body li { margin-bottom: 6px; }
+        .article-body strong { color: #0c4a6e; }
+        .article-body .art-faq {
+            margin-top: 14px;
+            border-top: 1px solid #e2e8f0;
+            padding-top: 12px;
+        }
+        .article-body .art-faq h3 { margin-top: 0; }
+        .article-body .art-q {
+            font-weight: 600;
+            color: #334155;
+            margin: 10px 0 4px;
+        }
+        .article-body .art-note {
+            background: #f0f9ff;
+            border-left: 3px solid #0284c7;
+            border-radius: 8px;
+            padding: 10px 12px;
+            font-size: 0.84rem;
+            margin: 12px 0 4px;
+        }
+        @media (min-width: 600px) {
+            .article-box summary { padding: 16px 22px; font-size: 1rem; }
+            .article-body { padding: 2px 22px 22px; font-size: 0.92rem; }
+        }
+        @media (min-width: 900px) {
+            .article-body { font-size: 0.95rem; }
+            .article-body h3 { font-size: 1rem; }
+        }
+
         .card {
             background: #ffffff;
             border-radius: 20px;
@@ -497,6 +582,54 @@
         .ai-send { background: #0284c7; color: #fff; border: none; border-radius: 10px; padding: 0 clamp(12px, 3vw, 16px); cursor: pointer; font-weight: 600; font-size: clamp(0.82rem, 2vw, 0.9rem); min-height: 42px; }
         .ai-send:hover { background: #0369a1; }
     </style>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "How is petrol cost per mile calculated?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Divide the price per litre by the miles per gallon converted to litres: cost per mile = (price per litre × 4.546) ÷ MPG. The calculator multiplies this by your trip distance to give the total fuel cost."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Is an electric car cheaper to run than a petrol car in the UK?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Usually yes when charging at home, because electricity per mile generally costs less than petrol or diesel per mile. Public rapid charging costs more per kWh, so long journeys relying on public chargers reduce the saving."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How much does it cost to drive 100 miles in the UK?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "As a rough guide, a typical petrol car costs around £13–18 for 100 miles depending on MPG and pump price; an EV charged at home often costs around £8–12, and around £15–22 on a rapid public charger. Exact figures depend on the vehicle and today's prices."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Why might my result differ from the actual pump cost?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Actual consumption varies with speed, traffic, hills, weather, load and air-conditioning use, and pump prices change daily. Use your dashboard's real-world MPG or miles-per-kWh average for the closest result."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Does the calculator include parking, tolls or ferry costs?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. It estimates fuel for petrol and diesel cars and electricity for EVs only. Add parking, tolls, ferries, food and accommodation separately when budgeting for a trip."
+      }
+    }
+  ]
+}
+</script>
 </head>
 <body>
 
@@ -523,6 +656,76 @@
     </h3>
     <p>Cost My Trip is a free UK journey cost calculator. Estimate petrol, diesel and electric charging costs for any trip in seconds. Figures are for guidance only — actual prices and consumption may vary.</p>
 </div>
+
+<details class="article-box">
+    <summary>
+        <svg class="art-icon" viewBox="0 0 24 24" fill="none" stroke="#0284c7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/>
+            <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/>
+        </svg>
+        How much does a road trip cost in the UK? Guide, examples and money-saving tips
+        <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+    </summary>
+    <div class="article-body">
+        <p>Planning a journey in the UK and want to know what it will cost in fuel or charging before you set off? This free <strong>Cost My Trip</strong> calculator estimates the running cost of any trip in miles for <strong>petrol, diesel and electric vehicles (EVs)</strong>. Enter the distance, your vehicle's consumption and the current price, and you get an instant estimate — no sign-up, no email and no app to install.</p>
+
+        <h3>How the calculator works</h3>
+        <p><strong>Petrol and diesel:</strong> the tool converts miles into gallons using your MPG figure, converts gallons to litres (1 UK gallon = 4.546 litres), then multiplies by the price per litre. Formula: miles &divide; MPG &times; 4.546 &times; price per litre.</p>
+        <p><strong>Electric cars:</strong> miles are divided by miles per kWh to get the energy needed in kWh, then multiplied by your electricity price per kWh. Formula: miles &divide; miles per kWh &times; price per kWh.</p>
+
+        <h3>Typical consumption by vehicle (UK)</h3>
+        <ul>
+            <li><strong>Small petrol car:</strong> around 45&ndash;60 MPG</li>
+            <li><strong>Medium family car:</strong> around 35&ndash;50 MPG</li>
+            <li><strong>Small SUV:</strong> around 30&ndash;42 MPG</li>
+            <li><strong>Large SUV / 4x4:</strong> around 20&ndash;30 MPG</li>
+            <li><strong>Electric car:</strong> around 2.5&ndash;4.0 miles per kWh, depending on size and driving style</li>
+        </ul>
+        <p>If you do not know your MPG or miles per kWh, the guide list above the calculator shows typical figures by vehicle type. Pick the closest match, then refine the figure from your car's handbook or dashboard real-world display.</p>
+
+        <h3>Example trip costs (illustrative)</h3>
+        <p>Fuel and electricity prices change daily, so the figures below use example prices and are for illustration only. Enter today's local price in the calculator for your own estimate.</p>
+        <ul>
+            <li><strong>London to Bristol (~120 miles), small petrol car at 48 MPG, &pound;1.45/litre:</strong> about &pound;16.48 in fuel.</li>
+            <li><strong>London to Manchester (~200 miles), diesel family car at 42 MPG, &pound;1.48/litre:</strong> about &pound;32.04 in fuel.</li>
+            <li><strong>Edinburgh to Glasgow (~45 miles), petrol car at 45 MPG, &pound;1.45/litre:</strong> about &pound;6.59 in fuel.</li>
+            <li><strong>120 miles in an EV at 3.2 miles/kWh:</strong> about &pound;11.25 at a home rate of 30p/kWh, or about &pound;20.63 at a public rapid charger at 55p/kWh.</li>
+            <li><strong>100 miles:</strong> roughly &pound;14.65 in a petrol car at 45 MPG and &pound;1.45/litre; roughly &pound;9.09 at home charging (3.3 miles/kWh, 30p/kWh) or about &pound;16.67 on a rapid public charger (55p/kWh).</li>
+        </ul>
+
+        <h3>Petrol, diesel or electric &mdash; which costs less per mile?</h3>
+        <p>Home charging an EV is usually the cheapest way to cover miles in the UK, because a kWh costs less per mile travelled than a litre of fuel. Public rapid chargers are more expensive per kWh and can narrow or remove the saving, especially on short trips where connection fees may also apply. Diesel cars remain efficient on long motorway runs, while modern petrol hybrids sit between the two. Switch between the Petrol/Diesel and Electric tabs for the same distance to see the difference for your vehicle.</p>
+
+        <h3>Tips to cut the cost of your UK journey</h3>
+        <ul>
+            <li>Drive smoothly &mdash; gentle acceleration and braking, and sticking to the speed limit, improves MPG and EV range.</li>
+            <li>Check tyre pressures; under-inflated tyres increase consumption.</li>
+            <li>Remove roof boxes and unnecessary weight when they are not needed.</li>
+            <li>Compare supermarket and motorway fuel prices before filling up; motorway stations are usually the most expensive.</li>
+            <li>EV drivers: charge at home on an off-peak or Economy 7 tariff where possible, and plan rapid stops ahead.</li>
+            <li>Combine short trips into one journey &mdash; a cold engine uses more fuel.</li>
+        </ul>
+
+        <h3>Other costs to budget for</h3>
+        <p>This calculator covers fuel and charging only. For a full trip budget also allow for parking, tolls (such as the M6 Toll, Dartford Crossing and the London Congestion Charge), ferry fares, accommodation, food, and vehicle running costs such as insurance, servicing and depreciation. Add these separately to your estimate.</p>
+
+        <div class="art-faq">
+            <h3>Frequently asked questions</h3>
+            <p class="art-q">How is petrol cost per mile calculated?</p>
+            <p>Divide the price per litre by the miles per gallon converted to litres: cost per mile = (price per litre &times; 4.546) &divide; MPG. The calculator multiplies this by your trip distance to give the total fuel cost.</p>
+            <p class="art-q">Is an electric car cheaper to run than a petrol car in the UK?</p>
+            <p>Usually yes when charging at home, because electricity per mile generally costs less than petrol or diesel per mile. Public rapid charging costs more per kWh, so long journeys relying on public chargers reduce the saving. Use the Petrol/Diesel and Electric tabs side by side for your own mileage.</p>
+            <p class="art-q">How much does it cost to drive 100 miles in the UK?</p>
+            <p>As a rough guide, a typical petrol car costs around &pound;13&ndash;18 for 100 miles depending on MPG and pump price; an EV charged at home often costs around &pound;8&ndash;12, and around &pound;15&ndash;22 on a rapid public charger. Exact figures depend on your vehicle and today's prices.</p>
+            <p class="art-q">Why might my result differ from the actual pump cost?</p>
+            <p>Actual consumption varies with speed, traffic, hills, weather, load and air-conditioning use, and pump prices change daily. The calculator uses your entered MPG or miles-per-kWh figure, so use your dashboard's real-world average for the closest result.</p>
+            <p class="art-q">Does the calculator include parking, tolls or ferry costs?</p>
+            <p>No. It estimates fuel for petrol and diesel cars and electricity for EVs only. Add parking, tolls, ferries, food and accommodation separately when budgeting for a trip.</p>
+        </div>
+
+        <p class="art-note">Tip: enter the exact distance from Google Maps (one-way or return as needed), your real-world consumption, and today's local price for the most accurate estimate.</p>
+    </div>
+</details>
 
 <div class="info-box">
     <h3>
