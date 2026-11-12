@@ -399,12 +399,8 @@
         .fuel-theme .calc-btn { background: #0071e3; }
         .ev-theme  .calc-btn { background: #34c759; }
         
-        .fuel-theme .calc-btn:hover {
-            background: #0077ed;
-        }
-        .ev-theme .calc-btn:hover {
-            background: #30d158;
-        }
+        .fuel-theme .calc-btn:hover { background: #0077ed; }
+        .ev-theme .calc-btn:hover { background: #30d158; }
         
         .fuel-theme .calc-btn:active {
             transform: scale(0.96);
@@ -613,7 +609,7 @@
       "name": "Does the calculator include parking, tolls or ferry costs?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "No. It estimates fuel for petrol and diesel cars and electricity for EVs only. Add parking, tolls, ferries, food and accommodation separately when budgeting for a trip."
+        "text": "The calculator now includes an optional field for parking or tolls. If you know the cost (for example, from pre-booking online), enter it to see the total journey cost."
       }
     }
   ]
@@ -709,7 +705,7 @@
             <p class="art-q">Why might my result differ from the actual pump cost?</p>
             <p>Actual consumption varies with speed, traffic, hills, weather, load and air-conditioning use, and pump prices change daily. The calculator uses your entered MPG or miles-per-kWh figure, so use your dashboard's real-world average for the closest result.</p>
             <p class="art-q">Does the calculator include parking, tolls or ferry costs?</p>
-            <p>No. It estimates fuel for petrol and diesel cars and electricity for EVs only. Add parking, tolls, ferries, food and accommodation separately when budgeting for a trip.</p>
+            <p>The calculator now includes an optional field for parking or tolls. If you know the cost (for example, from pre-booking online), enter it to see the total journey cost.</p>
         </div>
 
         <p class="art-note">Tip: enter the exact distance from Google Maps (one-way or return as needed), your real-world consumption, and today's local price for the most accurate estimate.</p>
@@ -732,7 +728,8 @@
        2. Enter your journey distance in miles<br>
        3. Enter your vehicle's consumption<br>
        4. Enter the price — choose pence or pounds<br>
-       5. Click "Calculate Cost"</p>
+       5. (Optional) Add parking or toll costs<br>
+       6. Click "Calculate Cost"</p>
 </div>
 
 <div class="card">
@@ -798,6 +795,12 @@
                 <input type="text" id="f_price" placeholder="e.g. 128.9" inputmode="decimal">
             </div>
 
+            <label>
+                <span class="pound-icon">£</span>
+                Parking / Tolls (optional)
+            </label>
+            <input type="number" id="f_parking" placeholder="e.g. 5.00" step="any" min="0" style="width: 100%;">
+
             <p class="note">1 UK Gallon = 4.546 Litres</p>
 
             <button class="calc-btn" onclick="doCalc()">
@@ -854,6 +857,12 @@
                 <input type="text" id="e_price" placeholder="e.g. 34" inputmode="decimal">
             </div>
 
+            <label>
+                <span class="pound-icon">£</span>
+                Parking / Tolls (optional)
+            </label>
+            <input type="number" id="e_parking" placeholder="e.g. 5.00" step="any" min="0" style="width: 100%;">
+
             <p class="note">Prices vary — enter your local rate</p>
 
             <button class="calc-btn" onclick="doCalc()">
@@ -874,8 +883,12 @@
             <span>Fuel cost:</span>
             <span id="r_cost">£0.00</span>
         </div>
+        <div class="res-row">
+            <span>Parking / Tolls:</span>
+            <span id="r_parking">£0.00</span>
+        </div>
         <div class="res-row total">
-            <span>Total Cost:</span>
+            <span>Estimated Total:</span>
             <span id="r_total_fuel">£0.00</span>
         </div>
     </div>
@@ -889,8 +902,12 @@
             <span>Energy cost:</span>
             <span id="r_ecost">£0.00</span>
         </div>
+        <div class="res-row">
+            <span>Parking / Tolls:</span>
+            <span id="r_eparking">£0.00</span>
+        </div>
         <div class="res-row total">
-            <span>Total Cost:</span>
+            <span>Estimated Total:</span>
             <span id="r_total_ev">£0.00</span>
         </div>
     </div>
@@ -974,6 +991,7 @@ function doCalc() {
         let mpg = parseFloat(document.getElementById('f_mpg').value);
         let priceUnit = document.getElementById('priceUnit').value;
         let pricePerLitre = parsePrice(document.getElementById('f_price').value);
+        let parkingInput = parseFloat(document.getElementById('f_parking').value);
         
         if (isNaN(miles) || miles < 0 || isNaN(mpg) || mpg <= 0 || isNaN(pricePerLitre) || pricePerLitre < 0) {
             alert('⚠️ Please fill in all fields with valid numbers!');
@@ -984,13 +1002,17 @@ function doCalc() {
             pricePerLitre = pricePerLitre / 100;
         }
         
+        let parkingCost = isNaN(parkingInput) || parkingInput < 0 ? 0 : parkingInput;
+        
         let gallonsUsed = miles / mpg;
         let litresUsed = gallonsUsed * LITRES_PER_GALLON;
-        let total = litresUsed * pricePerLitre;
+        let totalFuel = litresUsed * pricePerLitre;
+        let finalTotal = totalFuel + parkingCost;
         
         document.getElementById('r_fuel').textContent = litresUsed.toFixed(2) + ' litres (' + gallonsUsed.toFixed(2) + ' gallons)';
-        document.getElementById('r_cost').textContent = '£' + total.toFixed(2);
-        document.getElementById('r_total_fuel').textContent = '£' + total.toFixed(2);
+        document.getElementById('r_cost').textContent = '£' + totalFuel.toFixed(2);
+        document.getElementById('r_parking').textContent = '£' + parkingCost.toFixed(2);
+        document.getElementById('r_total_fuel').textContent = '£' + finalTotal.toFixed(2);
         document.getElementById('fuelRes').classList.add('visible');
         document.getElementById('evRes').classList.remove('visible');
     } else {
@@ -998,6 +1020,7 @@ function doCalc() {
         let milesPerKwh = parseFloat(document.getElementById('e_mpk').value);
         let ePriceUnit = document.getElementById('ePriceUnit').value;
         let pricePerKwh = parsePrice(document.getElementById('e_price').value);
+        let parkingInput = parseFloat(document.getElementById('e_parking').value);
         
         if (isNaN(miles) || miles < 0 || isNaN(milesPerKwh) || milesPerKwh <= 0 || isNaN(pricePerKwh) || pricePerKwh < 0) {
             alert('⚠️ Please fill in all fields with valid numbers!');
@@ -1008,12 +1031,16 @@ function doCalc() {
             pricePerKwh = pricePerKwh / 100;
         }
         
+        let parkingCost = isNaN(parkingInput) || parkingInput < 0 ? 0 : parkingInput;
+        
         let kwhNeeded = miles / milesPerKwh;
-        let total = kwhNeeded * pricePerKwh;
+        let totalFuel = kwhNeeded * pricePerKwh;
+        let finalTotal = totalFuel + parkingCost;
         
         document.getElementById('r_energy').textContent = kwhNeeded.toFixed(1) + ' kWh';
-        document.getElementById('r_ecost').textContent = '£' + total.toFixed(2);
-        document.getElementById('r_total_ev').textContent = '£' + total.toFixed(2);
+        document.getElementById('r_ecost').textContent = '£' + totalFuel.toFixed(2);
+        document.getElementById('r_eparking').textContent = '£' + parkingCost.toFixed(2);
+        document.getElementById('r_total_ev').textContent = '£' + finalTotal.toFixed(2);
         document.getElementById('evRes').classList.add('visible');
         document.getElementById('fuelRes').classList.remove('visible');
     }
