@@ -37,6 +37,23 @@
     <!-- Google AdSense auto-ads — loads on every visit; with Consent Mode v2 it serves non-personalized ads until the user grants consent -->
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6363136655011505" crossorigin="anonymous"></script>
 
+    <!-- Theme init — reads the choice set by the toggle on index.html -->
+    <script>
+      (function () {
+        try {
+          var t = localStorage.getItem('cmt-theme');
+          if (t !== 'dark' && t !== 'light') {
+            var m = document.cookie.match(/(?:^|;\s*)cmt-theme=(dark|light)/);
+            t = m ? m[1] : null;
+          }
+          if (!t) {
+            t = (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) ? 'dark' : 'light';
+          }
+          if (t === 'dark') document.documentElement.classList.add('dark');
+        } catch (e) {}
+      })();
+    </script>
+
     <style>
         /* ============================================================
            Apple-inspired skin for Cost My Trip
@@ -221,6 +238,52 @@
             body { max-width: 680px; padding: 32px 24px; }
             header svg.icon { width: 32px; height: 32px; }
         }
+
+        /* ============================================================
+           DARK MODE
+           ============================================================ */
+        html.dark { color-scheme: dark; }
+
+        html.dark body {
+            background: #000000;
+            color: #f5f5f7;
+        }
+
+        /* Header */
+        html.dark header h1 { color: #f5f5f7; }
+        html.dark header p { color: #a1a1a6; }
+        html.dark header svg.icon { stroke: #0a84ff; }
+
+        /* Card */
+        html.dark .card {
+            background: #1c1c1e;
+            box-shadow: 0 4px 24px rgba(0,0,0,0.55), 0 1px 3px rgba(0,0,0,0.4);
+        }
+        html.dark .card h2,
+        html.dark .card h3,
+        html.dark .card strong { color: #f5f5f7; }
+        html.dark .card p,
+        html.dark .card li { color: #a1a1a6; }
+        html.dark .card a { color: #0a84ff; }
+        html.dark .back-link { color: #0a84ff; }
+
+        /* Footer */
+        html.dark footer { color: #8e8e93; }
+        html.dark footer a { color: #0a84ff; }
+
+        /* Cookie banner */
+        html.dark .cookie-banner {
+            background: rgba(28,28,30,0.92);
+            border-color: rgba(255,255,255,0.08);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.5);
+        }
+        html.dark .cookie-banner p { color: #a1a1a6; }
+        html.dark .cookie-banner p a { color: #0a84ff !important; }
+        html.dark .cookie-icon { stroke: #0a84ff; }
+        html.dark .cookie-btn.accept { background: #0a84ff; color: #ffffff; }
+        html.dark .cookie-btn.accept:hover { background: #3395ff; }
+        html.dark .cookie-btn.decline { background: #2c2c2e; color: #f5f5f7; }
+        html.dark .cookie-btn.decline:hover { background: #3a3a3c; }
     </style>
 </head>
 <body>

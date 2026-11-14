@@ -38,6 +38,23 @@
     <!-- Google AdSense auto-ads — loads on every visit; with Consent Mode v2 it serves non-personalized ads until the user grants consent -->
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6363136655011505" crossorigin="anonymous"></script>
 
+    <!-- Theme init — runs before paint to avoid a flash of the wrong theme -->
+    <script>
+      (function () {
+        try {
+          var t = localStorage.getItem('cmt-theme');
+          if (t !== 'dark' && t !== 'light') {
+            var m = document.cookie.match(/(?:^|;\s*)cmt-theme=(dark|light)/);
+            t = m ? m[1] : null;
+          }
+          if (!t) {
+            t = (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) ? 'dark' : 'light';
+          }
+          if (t === 'dark') document.documentElement.classList.add('dark');
+        } catch (e) {}
+      })();
+    </script>
+
     <style>
         /* ============================================================
            Apple-inspired skin for Cost My Trip
@@ -63,6 +80,7 @@
             letter-spacing: -0.011em;
             line-height: 1.47059;
             overflow-x: hidden;
+            transition: background-color 0.3s ease, color 0.3s ease;
         }
 
         /* ===== Header ===== */
@@ -93,6 +111,59 @@
         header svg.icon,
         .info-box svg.icon,
         .cookie-icon { stroke: #0071e3; }
+
+        /* ===== Theme toggle (dark mode) ===== */
+        .theme-toggle-row {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 16px;
+        }
+        .theme-ic {
+            width: 16px;
+            height: 16px;
+            flex-shrink: 0;
+            color: #c7c7cc;
+            transition: color 0.3s ease;
+        }
+        html:not(.dark) .theme-ic.sun { color: #ffd60a; } /* sárga nap ikon világos módban */
+        html.dark .theme-ic.moon { color: #0a84ff; }      /* kék hold ikon dark módban */
+
+        .theme-switch {
+            position: relative;
+            width: 52px;
+            height: 30px;
+            flex-shrink: 0;
+            border: none;
+            border-radius: 15px;
+            padding: 0;
+            background: #e5e5ea;
+            cursor: pointer;
+            transition: background-color 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            -webkit-tap-highlight-color: transparent;
+            touch-action: manipulation;
+        }
+        .theme-switch[aria-checked="true"] { background: #0a84ff; }
+        .theme-knob {
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            width: 26px;
+            height: 26px;
+            border-radius: 50%;
+            background: #ffffff;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.18);
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .theme-switch[aria-checked="true"] .theme-knob { transform: translateX(22px); }
+        .theme-switch:focus-visible {
+            outline: 2px solid #0071e3;
+            outline-offset: 2px;
+        }
+        html.dark .theme-switch { background: #3a3a3c; }
+        html.dark .theme-switch[aria-checked="true"] { background: #0a84ff; }
+        html.dark .theme-switch:focus-visible { outline-color: #0a84ff; }
 
         /* ===== Info boxes ===== */
         .info-box {
@@ -566,6 +637,124 @@
                 padding: 20px 16px;
             }
         }
+
+        /* ============================================================
+           DARK MODE
+           ============================================================ */
+        html.dark { color-scheme: dark; }
+
+        html.dark body {
+            background: #000000;
+            color: #f5f5f7;
+        }
+
+        /* Header */
+        html.dark header h1 { color: #f5f5f7; }
+        html.dark header p { color: #a1a1a6; }
+        html.dark header svg.icon,
+        html.dark .info-box svg.icon,
+        html.dark .cookie-icon { stroke: #0a84ff; }
+
+        /* Cards & info boxes */
+        html.dark .info-box,
+        html.dark .article-box,
+        html.dark .card {
+            background: #1c1c1e;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.6);
+        }
+        html.dark .card {
+            box-shadow: 0 4px 24px rgba(0,0,0,0.55), 0 1px 3px rgba(0,0,0,0.4);
+        }
+        html.dark .info-box h3,
+        html.dark .article-box summary { color: #f5f5f7; }
+        html.dark .info-box p { color: #a1a1a6; }
+        html.dark .article-box summary .chev { color: #8e8e93; }
+        html.dark .article-box summary .art-icon { stroke: #0a84ff; }
+        html.dark .article-body { color: #a1a1a6; }
+        html.dark .article-body h3,
+        html.dark .article-body strong,
+        html.dark .article-body .art-q { color: #f5f5f7; }
+        html.dark .article-body .art-faq { border-top-color: #38383a; }
+        html.dark .article-body .art-note {
+            background: #2c2c2e;
+            color: #a1a1a6;
+            border-left-color: #0a84ff;
+        }
+
+        /* Tabs */
+        html.dark .tabs { background: #2c2c2e; }
+        html.dark .tab { color: #a1a1a6; }
+        html.dark .tab:hover:not(.active) { color: #f5f5f7; }
+        html.dark #tabFuel.active {
+            background: #48484a;
+            color: #0a84ff;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.45);
+        }
+        html.dark #tabEv.active {
+            background: #48484a;
+            color: #30d158;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.45);
+        }
+
+        /* Help boxes */
+        html.dark .fuel-theme .help-box {
+            background: #0e2338;
+            border-left-color: #0a84ff;
+        }
+        html.dark .ev-theme .help-box {
+            background: #0e2a18;
+            border-left-color: #30d158;
+        }
+        html.dark .help-box h4 { color: #f5f5f7; }
+        html.dark .mpg-item { border-bottom-color: #38383a; }
+        html.dark .mpg-item span:first-child { color: #f5f5f7; }
+        html.dark .mpg-item span:last-child { color: #a1a1a6; }
+
+        /* Form */
+        html.dark label { color: #f5f5f7; }
+        html.dark select,
+        html.dark input {
+            background: #2c2c2e;
+            border-color: #48484a;
+            color: #f5f5f7;
+        }
+        html.dark input::placeholder { color: #8e8e93; }
+        html.dark .note { color: #8e8e93; }
+
+        /* Results */
+        html.dark .fuel-result {
+            background: #0e2338;
+            border-left-color: #0a84ff;
+        }
+        html.dark .ev-result {
+            background: #0e2a18;
+            border-left-color: #30d158;
+        }
+        html.dark .res-row { color: #f5f5f7; }
+        html.dark .fuel-result .total {
+            color: #0a84ff;
+            border-top-color: #1c3d5e;
+        }
+        html.dark .ev-result .total {
+            color: #30d158;
+            border-top-color: #1d4630;
+        }
+
+        /* Footer */
+        html.dark footer { color: #8e8e93; }
+        html.dark footer a { color: #0a84ff; }
+
+        /* Cookie banner */
+        html.dark .cookie-banner {
+            background: rgba(28,28,30,0.92);
+            border-color: rgba(255,255,255,0.08);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.5);
+        }
+        html.dark .cookie-banner p { color: #a1a1a6; }
+        html.dark .cookie-btn.accept { background: #0a84ff; color: #ffffff; }
+        html.dark .cookie-btn.accept:hover { background: #3395ff; }
+        html.dark .cookie-btn.decline { background: #2c2c2e; color: #f5f5f7; }
+        html.dark .cookie-btn.decline:hover { background: #3a3a3c; }
     </style>
 <script type="application/ld+json">
 {
@@ -629,6 +818,19 @@
         Cost My Trip
     </h1>
     <p>Estimate your fuel and electricity costs for any journey</p>
+
+    <div class="theme-toggle-row">
+        <svg class="theme-ic sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="4"/>
+            <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/>
+        </svg>
+        <button type="button" id="themeToggle" class="theme-switch" role="switch" aria-checked="false" aria-label="Dark mode">
+            <span class="theme-knob"></span>
+        </button>
+        <svg class="theme-ic moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+        </svg>
+    </div>
 </header>
 
 <div class="info-box">
@@ -942,6 +1144,7 @@
 
 <script>
 const LITRES_PER_GALLON = 4.54609;
+const THEME_KEY = 'cmt-theme';
 
 document.getElementById('year').textContent = new Date().getFullYear();
 
@@ -1063,6 +1266,30 @@ function getCookie(name) {
     }
     return null;
 }
+
+/* ===== Dark mode ===== */
+function currentTheme() {
+    return document.documentElement.classList.contains('dark') ? 'dark' : 'light';
+}
+
+function setTheme(theme, persist) {
+    const isDark = theme === 'dark';
+    document.documentElement.classList.toggle('dark', isDark);
+    const btn = document.getElementById('themeToggle');
+    if (btn) btn.setAttribute('aria-checked', isDark ? 'true' : 'false');
+    if (persist) {
+        try { localStorage.setItem(THEME_KEY, theme); } catch (e) {}
+        setCookie(THEME_KEY, theme, 365); /* fallback + shared with privacy/terms/cookies pages */
+    }
+}
+
+function toggleTheme() {
+    setTheme(currentTheme() === 'dark' ? 'light' : 'dark', true);
+}
+
+document.getElementById('themeToggle').addEventListener('click', toggleTheme);
+/* Kezdeti állapot szinkronizálása a gombbal */
+setTheme(currentTheme(), false);
 
 function grantConsent() {
     if (typeof gtag === 'function') {
