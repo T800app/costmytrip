@@ -4,38 +4,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Privacy Policy — Cost My Trip</title>
-    <meta name="description" content="Privacy Policy for Cost My Trip — what data we collect, Google Analytics 4 and Google AdSense usage, and your UK GDPR rights.">
+    <meta name="description" content="Privacy Policy for Cost My Trip — what the site processes, browser-local preferences, hosting logs, and your UK GDPR rights. No advertising or analytics cookies.">
     <link rel="canonical" href="https://costmytrip.co.uk/privacy.html">
 
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://costmytrip.co.uk/privacy.html">
     <meta property="og:title" content="Privacy Policy — Cost My Trip">
-    <meta property="og:description" content="Privacy Policy for Cost My Trip — what data we collect, Google Analytics 4 and Google AdSense usage, and your UK GDPR rights.">
+    <meta property="og:description" content="Privacy Policy for Cost My Trip — what the site processes, browser-local preferences, hosting logs, and your UK GDPR rights. No advertising or analytics cookies.">
     <!-- Twitter / X -->
     <meta name="twitter:card" content="summary">
     <meta name="twitter:title" content="Privacy Policy — Cost My Trip">
-    <meta name="twitter:description" content="Privacy Policy for Cost My Trip — what data we collect, Google Analytics 4 and Google AdSense usage, and your UK GDPR rights.">
+    <meta name="twitter:description" content="Privacy Policy for Cost My Trip — what the site processes, browser-local preferences, hosting logs, and your UK GDPR rights. No advertising or analytics cookies.">
     <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect width='24' height='24' rx='5' fill='%230c4a6e'/%3E%3Cg fill='none' stroke='white' stroke-width='2'%3E%3Cpath d='M14 16H9'/%3E%3Cpath d='M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.5 17.2 10 16 10h-1.26l-1.5-2.5C12.3 6.5 11.5 6 10.5 6h-5c-.9 0-1.7.7-1.9 1.5L3 11v5c0 .6.4 1 1 1h2'/%3E%3Ccircle cx='6.5' cy='17.5' r='1.5'/%3E%3Ccircle cx='16.5' cy='17.5' r='1.5'/%3E%3C/g%3E%3C/svg%3E">
     <meta name="google-site-verification" content="HjdE15GoAaT274ijvvbiK6eB6HblnZFaGxSE8fF48Ko">
 
-    <!-- Google Consent Mode v2 — MUST load before gtag.js / AdSense -->
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('consent', 'default', {
-        'ad_storage': 'denied',
-        'ad_user_data': 'denied',
-        'ad_personalization': 'denied',
-        'analytics_storage': 'denied',
-        'wait_for_update': 500
-      });
-      gtag('js', new Date());
-      gtag('config', 'G-NR149MHHDV');
-    </script>
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-NR149MHHDV"></script>
-    <!-- Google AdSense auto-ads — loads on every visit; with Consent Mode v2 it serves non-personalized ads until the user grants consent -->
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6363136655011505" crossorigin="anonymous"></script>
 
     <!-- Theme init — reads the choice set by the toggle on index.html -->
     <script>
@@ -168,66 +151,6 @@
         footer a { color: #0071e3; text-decoration: none; margin: 0 6px; }
         footer a:hover { text-decoration: underline; }
 
-        /* ===== Cookie banner ===== */
-        .cookie-banner {
-            position: fixed;
-            bottom: 12px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: calc(100% - 24px);
-            max-width: 600px;
-            box-sizing: border-box;
-            background: rgba(255,255,255,0.92);
-            -webkit-backdrop-filter: saturate(180%) blur(20px);
-            backdrop-filter: saturate(180%) blur(20px);
-            padding: 18px;
-            border-radius: 18px;
-            /* Finom, alig látható árnyék, hogy ne legyen zavaró szürke folt mobilon */
-            box-shadow: 0 2px 10px rgba(0,0,0,0.03);
-            border: 1px solid rgba(0,0,0,0.04);
-            z-index: 1000;
-            display: none;
-        }
-        .cookie-banner.show { 
-            display: block; 
-            animation: cookieSlideUp 0.3s ease; 
-        }
-        @keyframes cookieSlideUp {
-            from { opacity: 0; transform: translate(-50%, 8px); }
-            to   { opacity: 1; transform: translate(-50%, 0); }
-        }
-
-        .cookie-banner-content { max-width: 100%; margin: 0 auto; }
-        .cookie-banner p {
-            font-size: 0.85rem;
-            color: #6e6e73;
-            margin-bottom: 12px;
-            line-height: 1.5;
-        }
-        .cookie-buttons { display: flex; gap: 10px; flex-wrap: wrap; }
-        .cookie-text-row { display: flex; align-items: flex-start; gap: 12px; }
-        .cookie-icon { width: 28px; height: 28px; flex-shrink: 0; margin-top: 2px; stroke: #0071e3; }
-        @media (max-width: 480px) {
-            .cookie-text-row { flex-direction: column; align-items: center; text-align: center; }
-            .cookie-buttons { flex-direction: column; }
-            .cookie-btn { width: 100%; }
-        }
-        .cookie-btn {
-            padding: 11px 22px;
-            border-radius: 10px;
-            border: none;
-            font-size: 0.9rem;
-            font-weight: 500;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            min-height: 42px;
-            letter-spacing: -0.01em;
-        }
-        .cookie-btn.accept { background: #0071e3; color: #fff; }
-        .cookie-btn.accept:hover { background: #0077ed; }
-        .cookie-btn.decline { background: #f5f5f7; color: #1d1d1f; }
-        .cookie-btn.decline:hover { background: #e8e8ed; }
-
         /* ===== Responsive ===== */
         @media (min-width: 600px) {
             body { max-width: 600px; padding: 24px; }
@@ -271,19 +194,6 @@
         html.dark footer { color: #8e8e93; }
         html.dark footer a { color: #0a84ff; }
 
-        /* Cookie banner */
-        html.dark .cookie-banner {
-            background: rgba(28,28,30,0.92);
-            border-color: rgba(255,255,255,0.08);
-            box-shadow: 0 2px 10px rgba(0,0,0,0.5);
-        }
-        html.dark .cookie-banner p { color: #a1a1a6; }
-        html.dark .cookie-banner p a { color: #0a84ff !important; }
-        html.dark .cookie-icon { stroke: #0a84ff; }
-        html.dark .cookie-btn.accept { background: #0a84ff; color: #ffffff; }
-        html.dark .cookie-btn.accept:hover { background: #3395ff; }
-        html.dark .cookie-btn.decline { background: #2c2c2e; color: #f5f5f7; }
-        html.dark .cookie-btn.decline:hover { background: #3a3a3c; }
     </style>
 </head>
 <body>
@@ -301,27 +211,27 @@
 
 <div class="card">
     <h2>Privacy Policy</h2>
-    <p>Last updated: October 2026</p>
+    <p>Last updated: November 2026</p>
     
     <h3>1. Who we are</h3>
     <p>Cost My Trip is a free online calculator tool. We respect your privacy and are committed to protecting your personal data.</p><p><strong>Data controller.</strong> The data controller for this website is the owner and operator of Cost My Trip. You can contact us at any time at whichischeaperapp@gmail.com.</p>
     
     <h3>2. Data we collect</h3>
     <p>We do not require you to create an account or submit personal information to use our calculator. The numbers you enter into the calculator are processed only in your browser and are not stored on our servers.</p>
-    <p>We may collect anonymous analytics data (such as pages visited, approximate country, and device type) to understand how visitors use our site and improve our service.</p>
+    <p>We do not use web analytics, advertising pixels, fingerprinting, or similar tracking, and we do not ask for names, email addresses, account details, or payment information. The figures you enter (distance, consumption, price, and any optional parking or toll cost) are used only to perform the calculation in your browser; they are not sent to us or to any third party.</p>
     
-    <h3>3. Cookies</h3>
-    <p>We use essential cookies to make the website work and analytics cookies to understand usage. You can accept or decline non-essential cookies using the banner shown on our site. For more details, see our <a href="/cookies.html">Cookies page</a>.</p>
+    <h3>3. Cookies and local storage</h3>
+    <p>This site uses only a functional appearance preference: a small first-party cookie and browser local storage (<code>cmt-theme</code>) set when you choose light or dark mode. It sets no analytics or advertising cookies and no third-party tracking cookies. For details, see our <a href="/cookies.html">Cookies page</a>.</p>
     
-    <h3>4. Third-party services</h3>
-    <p>We use Google Analytics 4 to analyse traffic and Google AdSense to display advertisements. Both are loaded via Google Consent Mode v2: non-essential cookie storage is denied by default and is only activated after you click "Accept" on the cookie banner. If you decline, no analytics or advertising cookies are set (Google may still receive anonymous, cookieless, aggregated pings). These services are governed by Google's own privacy policy.</p>
-    <p><strong>Google AdSense:</strong> Google, as a third-party vendor, uses cookies to serve ads on this site only after consent. Google's use of advertising cookies enables it and its partners to serve ads to you based on your visit to this site and/or other sites on the Internet. You may opt out of personalised advertising by visiting <a href="https://www.google.com/settings/ads" target="_blank" rel="noopener">Google Ads Settings</a>.</p><p><strong>Legal basis for processing.</strong> Under UK data protection law, we rely on your consent (given via the cookie banner) to place analytics and advertising cookies and to process anonymous usage data. Strictly necessary cookies are used because they are necessary for the legitimate operation of the website.</p>
-<p><strong>International data transfers.</strong> Google Analytics and Google AdSense are operated by Google LLC, which may transfer data to the United States under the UK-US Data Privacy Framework or other appropriate safeguards recognised under UK data protection law.</p>
-<p><strong>Data retention.</strong> We do not store personal data on our own servers. Google Analytics retains anonymous usage data according to the retention setting in your Google Analytics account (commonly 14 months). Advertising cookies set by Google typically persist for up to 13 months. You can delete all cookies and local storage at any time through your browser settings.</p>
-<p><strong>Hosting.</strong> This website is hosted on GitHub Pages (GitHub, Inc., a Microsoft company). GitHub may process basic technical data — such as your IP address and browser type — in server logs, solely to provide, maintain and secure the hosting service. See the GitHub Privacy Statement for details.</p>
-    
-    <h3>5. Your rights</h3>
-    <p>Under UK GDPR, you have the right to access, correct, or delete personal data we hold about you. Since we do not store personal data, most requests can be fulfilled by simply clearing your browser cookies.</p><p>You also have the right to request restriction of processing, data portability, and to object to certain processing. In addition, you have the right to lodge a complaint with the UK supervisory authority, the Information Commissioner's Office (ICO) — see ico.org.uk — if you believe our handling of your data has breached data protection law.</p>
+    <h3>4. Third-party services and hosting</h3>
+    <p>This website does not use Google Analytics, Google AdSense, or any other advertising or analytics service, and no visitor data is shared with advertisers or data brokers. No third-party widgets, maps, comment forms, or embeds are loaded.</p>
+    <p><strong>Hosting.</strong> This website is hosted on GitHub Pages (GitHub, Inc., a Microsoft company). GitHub may process standard technical data — such as your IP address and browser type — in server logs solely to provide, maintain, and secure the hosting service. GitHub acts as a processor for these hosting logs under its own privacy statement; we do not have access to visitor-level server logs.</p>
+    <p><strong>Legal basis.</strong> The only device-side data is the appearance preference you choose yourself (light/dark mode), which is stored to provide the display option you requested. We run no consent-based advertising or analytics processing.</p>
+    <p><strong>International transfers.</strong> The site itself does not transfer personal data outside the United Kingdom or the EEA. Hosting logs are handled by GitHub under GitHub's own privacy terms and applicable law.</p>
+    <p><strong>Data retention.</strong> We hold no user accounts, visitor databases, or server-side personal data. Your calculator entries never leave your device. The theme preference remains in your browser until you clear your cookies or site data; hosting-provider logs follow GitHub's retention policy.</p>
+
+        <h3>5. Your rights</h3>
+    <p>Under UK GDPR you have the right to access, correct, delete, restrict, or port personal data concerning you, and to object to processing. Because we do not hold personal data about visitors, there is nothing for us to retrieve or export; deleting your browser data removes the local appearance preference.</p><p>You also have the right to lodge a complaint with the UK supervisory authority, the Information Commissioner's Office (ICO) — see ico.org.uk — if you believe our handling of your data has breached data protection law.</p>
     
     <h3>6. Contact</h3>
     <p>If you have any questions about this privacy policy or how we handle your data, please contact us at: <a href="mailto:whichischeaperapp@gmail.com">whichischeaperapp@gmail.com</a></p>
@@ -336,95 +246,8 @@
     </div>
 </footer>
 
-<div id="cookieBanner" class="cookie-banner">
-    <div class="cookie-banner-content">
-        <div class="cookie-text-row">
-            <svg class="cookie-icon" viewBox="0 0 24 24" fill="none" stroke="#0284c7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M12 2a10 10 0 1 0 10 10 4 4 0 0 1-5-5 4 4 0 0 1-5-5z"/>
-                <path d="M8.5 8.5v.01"/>
-                <path d="M16 15.5v.01"/>
-                <path d="M12 12v.01"/>
-                <path d="M11 17v.01"/>
-                <path d="M7 14v.01"/>
-            </svg>
-            <p>We use essential cookies to make this site work. With your consent we also use Google Analytics (analytics) and Google AdSense (advertising) cookies. You can accept or decline — the calculator works either way. See our <a href="/cookies.html" style="color:#0284c7;text-decoration:underline;">Cookie Policy</a>.</p>
-        </div>
-        <div class="cookie-buttons">
-            <button class="cookie-btn accept" onclick="acceptCookies()">Accept</button>
-            <button class="cookie-btn decline" onclick="declineCookies()">Decline</button>
-        </div>
-    </div>
-</div>
-
 <script>
 document.getElementById('year').textContent = new Date().getFullYear();
-function setCookie(name, value, days) {
-    const date = new Date();
-    date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
-    const expires = '; expires=' + date.toUTCString();
-    document.cookie = name + '=' + (value || '') + expires + '; path=/; SameSite=Lax';
-}
-
-function getCookie(name) {
-    const nameEQ = name + '=';
-    const ca = document.cookie.split(';');
-    for (let i = 0; i < ca.length; i++) {
-        let c = ca[i];
-        while (c.charAt(0) === ' ') c = c.substring(1, c.length);
-        if (c.indexOf(nameEQ) === 0) return c.substring(nameEQ.length, c.length);
-    }
-    return null;
-}
-
-function grantConsent() {
-    if (typeof gtag === 'function') {
-        gtag('consent', 'update', {
-            'ad_storage': 'granted',
-            'ad_user_data': 'granted',
-            'ad_personalization': 'granted',
-            'analytics_storage': 'granted'
-        });
-    }
-}
-
-function denyConsent() {
-    if (typeof gtag === 'function') {
-        gtag('consent', 'update', {
-            'ad_storage': 'denied',
-            'ad_user_data': 'denied',
-            'ad_personalization': 'denied',
-            'analytics_storage': 'denied'
-        });
-    }
-}
-
-function applyConsent() {
-    const choice = getCookie('cookieConsent');
-    if (choice === 'accepted') grantConsent();
-    else if (choice === 'declined') denyConsent();
-}
-
-function showCookieBanner() {
-    const banner = document.getElementById('cookieBanner');
-    if (!getCookie('cookieConsent')) {
-        banner.classList.add('show');
-    }
-}
-
-function acceptCookies() {
-    setCookie('cookieConsent', 'accepted', 180);
-    grantConsent();
-    document.getElementById('cookieBanner').classList.remove('show');
-}
-
-function declineCookies() {
-    setCookie('cookieConsent', 'declined', 180);
-    denyConsent();
-    document.getElementById('cookieBanner').classList.remove('show');
-}
-
-applyConsent();
-showCookieBanner();
 </script>
 </body>
 </html>
