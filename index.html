@@ -17,8 +17,6 @@
     <meta name="twitter:title" content="Cost My Trip — Calculate Your Journey Costs">
     <meta name="twitter:description" content="Free UK journey cost calculator. Estimate petrol, diesel and electric vehicle charging costs for any trip in miles. No sign-up needed.">
     <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect width='24' height='24' rx='5' fill='%230c4a6e'/%3E%3Cg fill='none' stroke='white' stroke-width='2'%3E%3Cpath d='M14 16H9'/%3E%3Cpath d='M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.5 17.2 10 16 10h-1.26l-1.5-2.5C12.3 6.5 11.5 6 10.5 6h-5c-.9 0-1.7.7-1.9 1.5L3 11v5c0 .6.4 1 1 1h2'/%3E%3Ccircle cx='6.5' cy='17.5' r='1.5'/%3E%3Ccircle cx='16.5' cy='17.5' r='1.5'/%3E%3C/g%3E%3C/svg%3E">
-    <!-- Google Search Console verification — replace content with your code -->
-    <meta name="google-site-verification" content="HjdE15GoAaT274ijvvbiK6eB6HblnZFaGxSE8fF48Ko">
 
 
     <!-- Theme init — runs before paint to avoid a flash of the wrong theme -->
@@ -633,9 +631,16 @@
         html.dark label { color: #f5f5f7; }
         html.dark select,
         html.dark input {
-            background: #2c2c2e;
+            background-color: #2c2c2e;
             border-color: #48484a;
             color: #f5f5f7;
+        }
+        /* Dark módban világosabb nyíl SVG a select-ekben, hogy látható legyen */
+        html.dark select {
+            background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23a1a1a6%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E");
+            background-repeat: no-repeat;
+            background-position: right 14px top 50%;
+            background-size: 10px auto;
         }
         html.dark input::placeholder { color: #8e8e93; }
         html.dark .note { color: #8e8e93; }
