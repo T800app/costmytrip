@@ -503,6 +503,70 @@
         .ev-result   .total { color: #248a3d; border-top-color: #cbead4; }
 
         .hidden { display: none !important; }
+        /* ===== Detour (cheaper station) calculator ===== */
+        .detour-card .help-box { background: #f0f7ff; border-left: 3px solid #0071e3; }
+        html.dark .detour-card .help-box { background: #0e2338; border-left-color: #0a84ff; }
+        .detour-card .help-box p { margin: 0; font-size: 0.85rem; line-height: 1.55; color: #6e6e73; }
+        html.dark .detour-card .help-box p { color: #a1a1a6; }
+        .detour-card .calc-btn { background: #0071e3; }
+        .detour-card .calc-btn:hover { background: #0077ed; }
+        .detour-card .calc-btn:active { background: #0062c4; transform: scale(0.96); }
+        /* ===== PHEV (plug-in hybrid) two-leg calculator ===== */
+        .phev-card .help-box { background: #fff6ec; border-left: 3px solid #ff9500; }
+        html.dark .phev-card .help-box { background: #2a1c0d; border-left-color: #ff9f0a; }
+        .phev-card .help-box p { margin: 0; font-size: 0.85rem; line-height: 1.55; color: #6e6e73; }
+        html.dark .phev-card .help-box p { color: #a1a1a6; }
+        .phev-card .calc-btn { background: #ff9500; }
+        .phev-card .calc-btn:hover { background: #ff9f0a; }
+        .phev-card .calc-btn:active { background: #e08600; transform: scale(0.96); }
+        .phev-card input:focus, .phev-card select:focus {
+            outline: 2px solid #ff9500;
+            outline-offset: -2px;
+            border-color: #ff9500;
+        }
+        .phev-result { background: #fff6ec; border-left-color: #ff9500; }
+        .phev-result .total { color: #b25000; border-top-color: #fbd9b0; }
+        html.dark .phev-result { background: #2a1c0d; border-left-color: #ff9f0a; }
+        html.dark .phev-result .total { color: #ff9f0a; border-top-color: #5a3d1c; }
+        .phev-leg-h {
+            font-size: 0.88rem;
+            font-weight: 600;
+            color: #1d1d1f;
+            margin: 22px 0 4px;
+            padding-top: 14px;
+            border-top: 1px solid #e5e5ea;
+        }
+        html.dark .phev-leg-h { color: #f5f5f7; border-top-color: #38383a; }
+        /* ===== Load / route chips ===== */
+        .chip-row { display: flex; flex-wrap: wrap; gap: 6px; margin: 4px 0 6px; }
+        .chip {
+            border: 1px solid #d2d2d7;
+            background: #ffffff;
+            color: #6e6e73;
+            padding: 8px 12px;
+            border-radius: 20px;
+            font-size: 0.82rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            touch-action: manipulation;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .chip.active { background: #0071e3; color: #ffffff; border-color: #0071e3; }
+        html.dark .chip { background: #2c2c2e; border-color: #48484a; color: #a1a1a6; }
+        html.dark .chip.active { background: #0a84ff; border-color: #0a84ff; color: #ffffff; }
+        .d-verdict {
+            margin-top: 12px;
+            padding: 12px 14px;
+            border-radius: 12px;
+            font-size: 0.92rem;
+            font-weight: 600;
+            line-height: 1.5;
+        }
+        .d-verdict.win { background: #e8f7ec; color: #1d7a35; }
+        .d-verdict.lose { background: #fdecec; color: #b3261e; }
+        html.dark .d-verdict.win { background: #12331d; color: #30d158; }
+        html.dark .d-verdict.lose { background: #3a1715; color: #ff6961; }
 
         /* ===== Footer ===== */
         footer {
@@ -713,6 +777,38 @@
         "@type": "Answer",
         "text": "The calculator now includes an optional field for parking or tolls. If you know the cost (for example, from pre-booking online), enter it to see the total journey cost."
       }
+    },
+    {
+      "@type": "Question",
+      "name": "Is it worth driving further to a cheaper petrol station?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Compare the price gap in pence per litre with the fuel cost of the extra miles. Gross saving = price gap (pence) x litres bought / 100; detour cost = extra miles / MPG x 4.546 litres per gallon x the fuel price. If the gross saving exceeds the detour fuel cost, the detour is worth it; small top-ups rarely justify a long diversion to a cheaper forecourt."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How do I calculate a hybrid car?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Self-charging (full) hybrids and mild hybrids run on petrol and never plug in. Choose Hybrid or Mild hybrid in the engine list, enter the hybrid's typical MPG from the guide, and use the normal petrol price per litre; the formula is the same as for a petrol car. Plug-in hybrids (PHEV) use the dedicated PHEV calculator below, which adds the battery leg at the electricity price and the petrol leg at the pump price."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How do I calculate a plug-in hybrid (PHEV)?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "A PHEV has two cost legs. The electric leg covers the miles driven on battery: miles divided by miles per kWh multiplied by the price per kWh. The petrol leg covers the miles after the battery is low: miles divided by MPG multiplied by 4.546 litres per gallon and the price per litre. Enter the electric miles and the total trip in the PHEV calculator to add both legs together."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How do the load and route chips change the result?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "The chips adjust consumption for real conditions: extra passengers, a full boot or a roof box increase consumption, as does steady motorway driving; town stop-start uses more fuel, while an EV is often more efficient in town. The adjusted MPG or miles per kWh appears under the result."
+      }
     }
   ]
 }
@@ -772,6 +868,7 @@
         <h3>How the calculator works</h3>
         <p><strong>Petrol and diesel:</strong> the tool converts miles into gallons using your MPG figure, converts gallons to litres (1 UK gallon = 4.546 litres), then multiplies by the price per litre. Formula: miles &divide; MPG &times; 4.546 &times; price per litre.</p>
         <p><strong>Electric cars:</strong> miles are divided by miles per kWh to get the energy needed in kWh, then multiplied by your electricity price per kWh. Formula: miles &divide; miles per kWh &times; price per kWh.</p>
+        <p><strong>Plug-in hybrids (PHEV):</strong> the electric leg uses the EV formula for the miles driven on battery (miles &divide; miles per kWh &times; price per kWh); the petrol leg uses the petrol formula for the miles after the battery runs low (miles &divide; MPG &times; 4.546 &times; price per litre). The PHEV calculator adds both legs together.</p>
 
         <h3>Typical consumption by vehicle (UK)</h3>
         <ul>
@@ -780,6 +877,7 @@
             <li><strong>Small SUV:</strong> around 30&ndash;42 MPG</li>
             <li><strong>Large SUV / 4x4:</strong> around 20&ndash;30 MPG</li>
             <li><strong>Electric car:</strong> around 2.5&ndash;4.0 miles per kWh, depending on size and driving style</li>
+            <li><strong>Plug-in hybrid (PHEV):</strong> around 25&ndash;45 real electric miles on a full charge; petrol engine around 40&ndash;55 MPG once the battery is low</li>
         </ul>
         <p>If you do not know your MPG or miles per kWh, the guide list above the calculator shows typical figures by vehicle type. Pick the closest match, then refine the figure from your car's handbook or dashboard real-world display.</p>
 
@@ -800,9 +898,12 @@
         <ul>
             <li>Drive smoothly &mdash; gentle acceleration and braking, and sticking to the speed limit, improves MPG and EV range.</li>
             <li>Check tyre pressures; under-inflated tyres increase consumption.</li>
-            <li>Remove roof boxes and unnecessary weight when they are not needed.</li>
+            <li>Remove roof boxes and unnecessary weight when they are not needed; a loaded roof box can add 10&ndash;20% on the motorway.</li>
+            <li>Use the load and route chips for real-world conditions: extra passengers, a full boot or a roof box raise consumption, and steady motorway driving uses more than mixed driving.</li>
+            <li>Self-charging and mild hybrids run on petrol: choose Hybrid or Mild hybrid in the fuel list and enter the hybrid's typical MPG; there is no separate charging cost.</li>
+            <li>PHEV drivers: charge at home before short trips — the battery leg on a home tariff is the cheapest miles; once the battery is depleted the car runs on petrol at its normal MPG, so long motorway runs after a low battery cost like a petrol car.</li>
             <li>Compare supermarket and motorway fuel prices before filling up; motorway stations are usually the most expensive.</li>
-            <li>EV drivers: charge at home on an off-peak or Economy 7 tariff where possible, and plan rapid stops ahead.</li>
+            <li>EV drivers: charge at home on an off-peak or Economy 7 tariff where possible, and plan rapid stops ahead; motorway speed and a full load cut miles per kWh more than in a petrol car.</li>
             <li>Combine short trips into one journey &mdash; a cold engine uses more fuel.</li>
         </ul>
 
@@ -821,6 +922,14 @@
             <p>Actual consumption varies with speed, traffic, hills, weather, load and air-conditioning use, and pump prices change daily. The calculator uses your entered MPG or miles-per-kWh figure, so use your dashboard's real-world average for the closest result.</p>
             <p class="art-q">Does the calculator include parking, tolls or ferry costs?</p>
             <p>The calculator now includes an optional field for parking or tolls. If you know the cost (for example, from pre-booking online), enter it to see the total journey cost.</p>
+            <p class="art-q">Is it worth driving further to a cheaper petrol station?</p>
+            <p>Use the <strong>detour checker</strong> below the main calculator. The gross saving is the price gap in pence per litre multiplied by the litres you buy; the detour cost is the fuel burned on the extra miles (extra miles &divide; MPG &times; 4.546 &times; price per litre). If the saving beats the detour cost, go; a small top-up at a motorway pump usually does not justify a long diversion.</p>
+            <p class="art-q">How do I calculate a hybrid car?</p>
+            <p>Self-charging (full) hybrids and mild hybrids run on petrol and never plug in. Choose Hybrid or Mild hybrid in the engine list, enter the hybrid's typical MPG from the guide, and use the normal petrol price per litre; the formula is the same as for a petrol car. Plug-in hybrids (PHEV) use the dedicated PHEV calculator below, which adds the battery leg at the electricity price and the petrol leg at the pump price.</p>
+            <p class="art-q">How do I calculate a plug-in hybrid (PHEV)?</p>
+            <p>A PHEV has two cost legs. The <strong>electric leg</strong> covers the miles driven on battery: miles &divide; miles per kWh &times; price per kWh. The <strong>petrol leg</strong> covers the miles after the battery runs low: miles &divide; MPG &times; 4.546 litres per gallon &times; price per litre. Enter the electric miles and the total trip in the PHEV card; the tool adds both legs at their own prices.</p>
+            <p class="art-q">How do the load and route chips change the result?</p>
+            <p>The chips adjust your consumption for real conditions: extra passengers, a full boot or a roof box increase consumption, as does steady motorway driving; town stop-start uses more fuel, while an EV is often more efficient in town. The adjusted MPG or miles per kWh appears under the result.</p>
         </div>
 
         <p class="art-note">Tip: enter the exact distance from Google Maps (one-way or return as needed), your real-world consumption, and today's local price for the most accurate estimate.</p>
@@ -839,12 +948,14 @@
         </svg>
         How to use
     </h3>
-    <p>1. Select your vehicle type: Petrol/Diesel or Electric<br>
-       2. Enter your journey distance in miles<br>
-       3. Enter your vehicle's consumption<br>
-       4. Enter the price — choose pence or pounds<br>
-       5. (Optional) Add parking or toll costs<br>
-       6. Click "Calculate Cost"</p>
+    <p>1. Pick a tab: Petrol/Diesel/Hybrid or Electric<br>
+       2. Choose the engine/fuel type and your vehicle's consumption (use the guide list above)<br>
+       3. Optional: tap the load and route chips for a more realistic figure<br>
+       4. Enter your journey distance in miles<br>
+       5. Enter the price — choose pence or pounds<br>
+       6. (Optional) Add parking or toll costs<br>
+       7. Click "Calculate Cost"<br>
+       8. For a plug-in hybrid (PHEV), use the dedicated PHEV card below: enter the miles on battery, the electric efficiency and price, then the petrol MPG and price for the remaining miles</p>
 </div>
 
 <div class="card">
@@ -877,6 +988,9 @@
                     <div class="mpg-item"><span>Large Van</span><span>22–30 MPG</span></div>
                     <div class="mpg-item"><span>Small Lorry</span><span>15–25 MPG</span></div>
                     <div class="mpg-item"><span>Large Lorry / HGV</span><span>8–12 MPG</span></div>
+                    <div class="mpg-item"><span>Small Hybrid</span><span>50–68 MPG</span></div>
+                    <div class="mpg-item"><span>Family Hybrid</span><span>48–62 MPG</span></div>
+                    <div class="mpg-item"><span>Hybrid SUV</span><span>40–52 MPG</span></div>
                 </div>
             </div>
 
@@ -891,12 +1005,40 @@
 
             <label>
                 <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/>
+                </svg>
+                Engine / fuel type
+            </label>
+            <select id="f_fueltype" style="width: 100%; flex: 1 1 auto;">
+                <option value="petrol" selected>Petrol</option>
+                <option value="diesel">Diesel</option>
+                <option value="hybrid">Hybrid (self-charging, e.g. Toyota, Kia)</option>
+                <option value="mhev">Mild hybrid</option>
+            </select>
+            <p class="note">Hybrids run on petrol — the calculator uses the same petrol formula with the hybrid's MPG.</p>
+
+            <label>
+                <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <path d="M12 14l4-4"/>
                     <path d="M3.34 19a10 10 0 1 1 17.32 0"/>
                 </svg>
                 Fuel consumption (MPG)
             </label>
             <input type="number" id="f_mpg" placeholder="e.g. 50" step="any" min="0" style="width: 100%;">
+
+            <label>Load in the car</label>
+            <div class="chip-row" data-group="f-load">
+                <button type="button" class="chip active" data-value="solo">Just me</button>
+                <button type="button" class="chip" data-value="two">2 adults, light bags</button>
+                <button type="button" class="chip" data-value="family">Family, boot full</button>
+                <button type="button" class="chip" data-value="max">Max load / roof box</button>
+            </div>
+            <label>Typical route</label>
+            <div class="chip-row" data-group="f-route">
+                <button type="button" class="chip" data-value="town">Town / stop-start</button>
+                <button type="button" class="chip active" data-value="mixed">Mixed</button>
+                <button type="button" class="chip" data-value="motorway">Motorway</button>
+            </div>
 
             <label>
                 <span class="pound-icon">£</span>
@@ -960,6 +1102,20 @@
             </label>
             <input type="number" id="e_mpk" placeholder="e.g. 3.3" step="any" min="0" style="width: 100%;">
 
+            <label>Load in the car</label>
+            <div class="chip-row" data-group="e-load">
+                <button type="button" class="chip active" data-value="solo">Just me</button>
+                <button type="button" class="chip" data-value="two">2 adults, light bags</button>
+                <button type="button" class="chip" data-value="family">Family, boot full</button>
+                <button type="button" class="chip" data-value="max">Max load / roof box</button>
+            </div>
+            <label>Typical route</label>
+            <div class="chip-row" data-group="e-route">
+                <button type="button" class="chip" data-value="town">Town / stop-start</button>
+                <button type="button" class="chip active" data-value="mixed">Mixed</button>
+                <button type="button" class="chip" data-value="motorway">Motorway</button>
+            </div>
+
             <label>
                 <span class="pound-icon">£</span>
                 Electricity cost
@@ -995,6 +1151,10 @@
             <span id="r_fuel">0 litres</span>
         </div>
         <div class="res-row">
+            <span>Adjusted consumption:</span>
+            <span id="r_adj">—</span>
+        </div>
+        <div class="res-row">
             <span>Fuel cost:</span>
             <span id="r_cost">£0.00</span>
         </div>
@@ -1014,6 +1174,10 @@
             <span id="r_energy">0 kWh</span>
         </div>
         <div class="res-row">
+            <span>Adjusted consumption:</span>
+            <span id="r_adj_ev">—</span>
+        </div>
+        <div class="res-row">
             <span>Energy cost:</span>
             <span id="r_ecost">£0.00</span>
         </div>
@@ -1024,6 +1188,212 @@
         <div class="res-row total">
             <span>Estimated Total:</span>
             <span id="r_total_ev">£0.00</span>
+        </div>
+    </div>
+</div>
+<div class="card detour-card">
+    <div class="help-box fuel-theme">
+        <h4>Is it worth detouring to a cheaper petrol station?</h4>
+        <p>Motorway service stations often cost 10–20p per litre more than supermarket forecourts near junctions. Compare the two prices, enter how much you will buy and the extra miles of the detour — the tool shows the net saving.</p>
+    </div>
+    <label>
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M3 22h18M4 9h16M12 2v7M5 9l-2 13M19 9l2 13"/>
+        </svg>
+        Nearby station price (pence per litre)
+    </label>
+    <input type="number" id="d_near" placeholder="e.g. 162" step="any" min="0" inputmode="decimal" style="width: 100%;">
+    <label>
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/>
+        </svg>
+        Cheaper station price (pence per litre)
+    </label>
+    <input type="number" id="d_cheap" placeholder="e.g. 145" step="any" min="0" inputmode="decimal" style="width: 100%;">
+    <label>
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 10c0 6-9 13-9 13S3 16 3 10a9 9 0 0118 0z"/>
+            <circle cx="12" cy="10" r="3"/>
+        </svg>
+        Fuel you plan to buy (litres)
+    </label>
+    <input type="number" id="d_litres" placeholder="e.g. 40" step="any" min="0" inputmode="decimal" style="width: 100%;">
+    <label>
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="9"/>
+            <path d="M12 7v5l3 2"/>
+        </svg>
+        Your vehicle (typical MPG)
+    </label>
+    <select id="d_mpg" style="width: 100%; flex: 1 1 auto;">
+        <option value="50">Small car — about 50 MPG</option>
+        <option value="45" selected>Family car — about 45 MPG</option>
+        <option value="37">Small SUV — about 37 MPG</option>
+        <option value="26">Large SUV / 4x4 — about 26 MPG</option>
+        <option value="40">Small van — about 40 MPG</option>
+        <option value="33">Medium van — about 33 MPG</option>
+        <option value="26">Large van — about 26 MPG</option>
+    </select>
+    <label>
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="6" cy="19" r="2"/>
+            <circle cx="18" cy="19" r="2"/>
+            <path d="M8 19h6l4-9H9L7 5H3"/>
+        </svg>
+        Extra detour distance (miles, round trip)
+    </label>
+    <input type="number" id="d_miles" placeholder="e.g. 6" step="any" min="0" inputmode="decimal" style="width: 100%;">
+    <label>
+        <span class="pound-icon">£</span>
+        Detour fuel price (pence per litre) — leave blank to use nearby price
+    </label>
+    <input type="number" id="d_detprice" placeholder="defaults to nearby price" step="any" min="0" inputmode="decimal" style="width: 100%;">
+    <button class="calc-btn fuel-theme" onclick="doDetour()">
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M5 13l4 4L19 7"/>
+        </svg>
+        Check the Detour
+    </button>
+    <div id="dRes" class="result fuel-result">
+        <div class="res-row">
+            <span>Gross saving at cheaper station:</span>
+            <span id="d_gross">£0.00</span>
+        </div>
+        <div class="res-row">
+            <span>Fuel used on detour:</span>
+            <span id="d_detcost">£0.00</span>
+        </div>
+        <div class="res-row total">
+            <span>Net result:</span>
+            <span id="d_net">£0.00</span>
+        </div>
+        <div id="d_verdict" class="d-verdict win"></div>
+        <div class="res-row">
+            <span>Break-even fill size:</span>
+            <span id="d_be">—</span>
+        </div>
+        <div class="res-row">
+            <span>Saving covers up to:</span>
+            <span id="d_max">—</span>
+        </div>
+    </div>
+</div>
+
+<div class="card phev-card">
+    <div class="help-box">
+        <h4>Plug-in hybrid (PHEV): electric leg + petrol leg</h4>
+        <p>A PHEV drives on battery power for the first miles (electric leg) and switches to the petrol engine once the battery is low (petrol leg). Enter the miles you cover on a charge and the total trip — the tool adds both legs at their own prices.</p>
+    </div>
+
+    <label>
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 10c0 6-9 13-9 13S3 16 3 10a9 9 0 0118 0z"/>
+            <circle cx="12" cy="10" r="3"/>
+        </svg>
+        Total journey distance (miles)
+    </label>
+    <input type="number" id="p_dist" placeholder="e.g. 70" step="any" min="0" inputmode="decimal" style="width: 100%;">
+
+    <label>
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M13 2L4 14h7l-1 8 9-12h-7l1-8z"/>
+        </svg>
+        Miles driven on electric (battery) before the petrol engine starts
+    </label>
+    <input type="number" id="p_evmiles" placeholder="e.g. 30" step="any" min="0" inputmode="decimal" style="width: 100%;">
+    <p class="note">Real-world PHEV battery range is typically about 25–45 miles. Enter 0 if you mostly run it on petrol.</p>
+
+    <label>Load in the car</label>
+    <div class="chip-row" data-group="p-load">
+        <button type="button" class="chip active" data-value="solo">Just me</button>
+        <button type="button" class="chip" data-value="two">2 adults, light bags</button>
+        <button type="button" class="chip" data-value="family">Family, boot full</button>
+        <button type="button" class="chip" data-value="max">Max load / roof box</button>
+    </div>
+    <label>Typical route</label>
+    <div class="chip-row" data-group="p-route">
+        <button type="button" class="chip" data-value="town">Town / stop-start</button>
+        <button type="button" class="chip active" data-value="mixed">Mixed</button>
+        <button type="button" class="chip" data-value="motorway">Motorway</button>
+    </div>
+
+    <p class="phev-leg-h">Electric leg (battery)</p>
+    <label>
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>
+        </svg>
+        Energy consumption (miles per kWh)
+    </label>
+    <input type="number" id="p_mpk" placeholder="e.g. 2.8" step="any" min="0" inputmode="decimal" style="width: 100%;">
+    <label>
+        <span class="pound-icon">£</span>
+        Electricity price
+    </label>
+    <div class="input-row">
+        <select id="p_eunit" onchange="updatePlaceholderPhevE()">
+            <option value="p" selected>p per kWh</option>
+            <option value="£">£ per kWh</option>
+        </select>
+        <input type="text" id="p_eprice" placeholder="e.g. 34" inputmode="decimal">
+    </div>
+
+    <p class="phev-leg-h">Petrol leg (engine after the battery)</p>
+    <label>
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/>
+        </svg>
+        Petrol engine consumption (MPG)
+    </label>
+    <input type="number" id="p_mpg" placeholder="e.g. 48" step="any" min="0" inputmode="decimal" style="width: 100%;">
+    <label>
+        <span class="pound-icon">£</span>
+        Petrol price
+    </label>
+    <div class="input-row">
+        <select id="p_funit" onchange="updatePlaceholderPhevF()">
+            <option value="p" selected>p per litre</option>
+            <option value="£">£ per litre</option>
+        </select>
+        <input type="text" id="p_fprice" placeholder="e.g. 138.9" inputmode="decimal">
+    </div>
+
+    <label>
+        <span class="pound-icon">£</span>
+        Parking / Tolls (optional)
+    </label>
+    <input type="number" id="p_parking" placeholder="e.g. 5.00" step="any" min="0" inputmode="decimal" style="width: 100%;">
+
+    <button class="calc-btn" onclick="doPhev()">
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M5 13l4 4L19 7"/>
+        </svg>
+        Calculate PHEV Cost
+    </button>
+
+    <div id="pRes" class="result phev-result">
+        <div class="res-row">
+            <span>Miles on electric:</span>
+            <span id="p_split">—</span>
+        </div>
+        <div class="res-row">
+            <span>Electric leg (battery):</span>
+            <span id="p_ecost">£0.00</span>
+        </div>
+        <div class="res-row">
+            <span>Petrol leg (engine):</span>
+            <span id="p_fcost">£0.00</span>
+        </div>
+        <div class="res-row">
+            <span>Adjusted consumption:</span>
+            <span id="p_adj">—</span>
+        </div>
+        <div class="res-row">
+            <span>Parking / Tolls:</span>
+            <span id="p_park">£0.00</span>
+        </div>
+        <div class="res-row total">
+            <span>Estimated Total:</span>
+            <span id="p_total">£0.00</span>
         </div>
     </div>
 </div>
@@ -1081,6 +1451,36 @@ function showEv() {
     document.getElementById('fuelRes').classList.remove('visible');
 }
 
+/* ===== Load / route chips ===== */
+var CHIP_FACTORS = {
+    'f-load':  { solo: 1.00, two: 1.03, family: 1.08, max: 1.18 },
+    'f-route': { town: 1.05, mixed: 1.00, motorway: 1.10 },
+    'e-load':  { solo: 1.00, two: 1.03, family: 1.10, max: 1.18 },
+    'e-route': { town: 0.95, mixed: 1.00, motorway: 1.22 },
+    'p-load':  { solo: 1.00, two: 1.03, family: 1.09, max: 1.18 }
+};
+/* PHEV route factors differ by leg: battery leg behaves like an EV, petrol leg like a petrol car */
+var PHEV_E_ROUTE = { town: 0.95, mixed: 1.00, motorway: 1.22 };
+var PHEV_F_ROUTE = { town: 1.05, mixed: 1.00, motorway: 1.10 };
+document.querySelectorAll('.chip-row').forEach(function (row) {
+    row.querySelectorAll('.chip').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+            row.querySelectorAll('.chip').forEach(function (b) { b.classList.remove('active'); });
+            btn.classList.add('active');
+        });
+    });
+});
+function chipFactor(group) {
+    var active = document.querySelector('.chip-row[data-group="' + group + '"] .chip.active');
+    if (!active) return 1;
+    var v = active.getAttribute('data-value');
+    return (CHIP_FACTORS[group] && CHIP_FACTORS[group][v] != null) ? CHIP_FACTORS[group][v] : 1;
+}
+function chipValue(group) {
+    var active = document.querySelector('.chip-row[data-group="' + group + '"] .chip.active');
+    return active ? active.getAttribute('data-value') : null;
+}
+
 function doCalc() {
     if (!document.getElementById('fuelWrapper').classList.contains('hidden')) {
         let miles = parseFloat(document.getElementById('f_dist').value);
@@ -1088,24 +1488,27 @@ function doCalc() {
         let priceUnit = document.getElementById('priceUnit').value;
         let pricePerLitre = parsePrice(document.getElementById('f_price').value);
         let parkingInput = parseFloat(document.getElementById('f_parking').value);
-        
+
         if (isNaN(miles) || miles < 0 || isNaN(mpg) || mpg <= 0 || isNaN(pricePerLitre) || pricePerLitre < 0) {
             alert('⚠️ Please fill in all fields with valid numbers!');
             return;
         }
-        
+
         if (priceUnit === 'p') {
             pricePerLitre = pricePerLitre / 100;
         }
-        
+
         let parkingCost = isNaN(parkingInput) || parkingInput < 0 ? 0 : parkingInput;
-        
-        let gallonsUsed = miles / mpg;
+
+        var fFactor = chipFactor('f-load') * chipFactor('f-route');
+        var adjMpg = mpg / fFactor;
+        let gallonsUsed = miles / adjMpg;
         let litresUsed = gallonsUsed * LITRES_PER_GALLON;
         let totalFuel = litresUsed * pricePerLitre;
         let finalTotal = totalFuel + parkingCost;
-        
+
         document.getElementById('r_fuel').textContent = litresUsed.toFixed(2) + ' litres (' + gallonsUsed.toFixed(2) + ' gallons)';
+        document.getElementById('r_adj').textContent = '≈ ' + adjMpg.toFixed(1) + ' MPG (load + route adjusted)';
         document.getElementById('r_cost').textContent = '£' + totalFuel.toFixed(2);
         document.getElementById('r_parking').textContent = '£' + parkingCost.toFixed(2);
         document.getElementById('r_total_fuel').textContent = '£' + finalTotal.toFixed(2);
@@ -1128,12 +1531,15 @@ function doCalc() {
         }
         
         let parkingCost = isNaN(parkingInput) || parkingInput < 0 ? 0 : parkingInput;
-        
-        let kwhNeeded = miles / milesPerKwh;
+
+        var eFactor = chipFactor('e-load') * chipFactor('e-route');
+        var adjMpk = milesPerKwh / eFactor;
+        let kwhNeeded = miles / adjMpk;
         let totalFuel = kwhNeeded * pricePerKwh;
         let finalTotal = totalFuel + parkingCost;
-        
+
         document.getElementById('r_energy').textContent = kwhNeeded.toFixed(1) + ' kWh';
+        document.getElementById('r_adj_ev').textContent = '≈ ' + adjMpk.toFixed(2) + ' mi/kWh (load + route adjusted)';
         document.getElementById('r_ecost').textContent = '£' + totalFuel.toFixed(2);
         document.getElementById('r_eparking').textContent = '£' + parkingCost.toFixed(2);
         document.getElementById('r_total_ev').textContent = '£' + finalTotal.toFixed(2);
@@ -1142,6 +1548,134 @@ function doCalc() {
     }
 }
 
+/* ===== Detour (cheaper station) calculator ===== */
+function doDetour() {
+    var near = parseFloat(document.getElementById('d_near').value);
+    var cheap = parseFloat(document.getElementById('d_cheap').value);
+    var litres = parseFloat(document.getElementById('d_litres').value);
+    var mpg = parseFloat(document.getElementById('d_mpg').value);
+    var miles = parseFloat(document.getElementById('d_miles').value);
+    var detRaw = document.getElementById('d_detprice').value;
+    var detPrice = (detRaw === '' || detRaw === null) ? near : parseFloat(detRaw);
+
+    if (isNaN(near) || near <= 0 || isNaN(cheap) || cheap < 0 ||
+        isNaN(litres) || litres <= 0 || isNaN(mpg) || mpg <= 0 ||
+        isNaN(miles) || miles < 0 || isNaN(detPrice) || detPrice <= 0) {
+        alert('⚠️ Please fill in both prices, the litres, your vehicle and the detour miles with valid numbers!');
+        return;
+    }
+
+    var res = document.getElementById('dRes');
+    var v = document.getElementById('d_verdict');
+
+    if (cheap >= near) {
+        document.getElementById('d_gross').textContent = '£0.00';
+        document.getElementById('d_detcost').textContent = '£0.00';
+        document.getElementById('d_net').textContent = '£0.00';
+        v.textContent = 'The "cheaper" station should be cheaper than the nearby one — check the two prices.';
+        v.className = 'd-verdict lose';
+        document.getElementById('d_be').textContent = '—';
+        document.getElementById('d_max').textContent = '—';
+        res.classList.add('visible');
+        return;
+    }
+
+    var gross = (near - cheap) * litres / 100;
+    var detourLitres = miles / mpg * LITRES_PER_GALLON;
+    var detourCost = detourLitres * detPrice / 100;
+    var net = gross - detourCost;
+    var gap = near - cheap;
+    var breakEvenLitres = detourCost * 100 / gap;
+    var costPerMile = LITRES_PER_GALLON * (detPrice / 100) / mpg;
+    var maxMiles = costPerMile > 0 ? gross / costPerMile : 0;
+
+    document.getElementById('d_gross').textContent = '£' + gross.toFixed(2);
+    document.getElementById('d_detcost').textContent = '£' + detourCost.toFixed(2) + ' (' + detourLitres.toFixed(1) + ' litres)';
+    document.getElementById('d_net').textContent = (net >= 0 ? '+' : '−') + '£' + Math.abs(net).toFixed(2);
+
+    if (net >= 0) {
+        v.textContent = 'Worth it — you save about £' + net.toFixed(2) + ' on this fill.';
+        v.className = 'd-verdict win';
+    } else {
+        v.textContent = 'Not worth it — the detour costs about £' + Math.abs(net).toFixed(2) + ' more than you save.';
+        v.className = 'd-verdict lose';
+    }
+
+    document.getElementById('d_be').textContent = 'about ' + breakEvenLitres.toFixed(0) + ' litres';
+    document.getElementById('d_max').textContent = 'about ' + maxMiles.toFixed(1) + ' extra miles';
+    res.classList.add('visible');
+}
+
+/* ===== PHEV (plug-in hybrid) two-leg calculator ===== */
+function updatePlaceholderPhevE() {
+    const unit = document.getElementById('p_eunit').value;
+    document.getElementById('p_eprice').placeholder = unit === 'p' ? 'e.g. 34' : 'e.g. 0.34';
+}
+function updatePlaceholderPhevF() {
+    const unit = document.getElementById('p_funit').value;
+    document.getElementById('p_fprice').placeholder = unit === 'p' ? 'e.g. 138.9' : 'e.g. 1.38';
+}
+
+function doPhev() {
+    var dist = parseFloat(document.getElementById('p_dist').value);
+    var evMiles = parseFloat(document.getElementById('p_evmiles').value);
+    var mpk = parseFloat(document.getElementById('p_mpk').value);
+    var mpg = parseFloat(document.getElementById('p_mpg').value);
+    var ePrice = parsePrice(document.getElementById('p_eprice').value);
+    var fPrice = parsePrice(document.getElementById('p_fprice').value);
+    var parkingInput = parseFloat(document.getElementById('p_parking').value);
+
+    if (isNaN(dist) || dist < 0 || isNaN(evMiles) || evMiles < 0) {
+        alert('⚠️ Please enter the total distance and the electric miles with valid numbers!');
+        return;
+    }
+    if (evMiles > dist) {
+        alert('⚠️ The electric miles cannot be more than the total journey distance.');
+        return;
+    }
+    var petrolMiles = dist - evMiles;
+    if (evMiles > 0 && (isNaN(mpk) || mpk <= 0 || isNaN(ePrice) || ePrice < 0)) {
+        alert('⚠️ For the electric leg, enter a valid miles-per-kWh figure and the electricity price.');
+        return;
+    }
+    if (petrolMiles > 0 && (isNaN(mpg) || mpg <= 0 || isNaN(fPrice) || fPrice < 0)) {
+        alert('⚠️ For the petrol leg, enter a valid MPG figure and the petrol price.');
+        return;
+    }
+
+    if (document.getElementById('p_eunit').value === 'p') ePrice = ePrice / 100;
+    if (document.getElementById('p_funit').value === 'p') fPrice = fPrice / 100;
+    var parkingCost = isNaN(parkingInput) || parkingInput < 0 ? 0 : parkingInput;
+
+    var loadF = chipFactor('p-load');
+    var routeV = chipValue('p-route') || 'mixed';
+    var eFactor = loadF * (PHEV_E_ROUTE[routeV] != null ? PHEV_E_ROUTE[routeV] : 1);
+    var fFactor = loadF * (PHEV_F_ROUTE[routeV] != null ? PHEV_F_ROUTE[routeV] : 1);
+
+    var adjMpk = mpk > 0 ? mpk / eFactor : 0;
+    var adjMpg = mpg > 0 ? mpg / fFactor : 0;
+
+    var kwh = evMiles > 0 ? evMiles / adjMpk : 0;
+    var eCost = kwh * (ePrice || 0);
+
+    var gallons = petrolMiles > 0 ? petrolMiles / adjMpg : 0;
+    var litres = gallons * LITRES_PER_GALLON;
+    var fCost = litres * (fPrice || 0);
+
+    var total = eCost + fCost + parkingCost;
+    var pct = dist > 0 ? Math.round(evMiles / dist * 100) : 0;
+
+    document.getElementById('p_split').textContent = evMiles + ' of ' + dist + ' miles (' + pct + '%)';
+    document.getElementById('p_ecost').textContent = kwh.toFixed(1) + ' kWh · £' + eCost.toFixed(2);
+    document.getElementById('p_fcost').textContent = litres.toFixed(1) + ' litres · £' + fCost.toFixed(2);
+    var adjTxt = '';
+    if (evMiles > 0) adjTxt += '≈ ' + adjMpk.toFixed(2) + ' mi/kWh electric';
+    if (petrolMiles > 0) adjTxt += (adjTxt ? ' · ' : '') + '≈ ' + adjMpg.toFixed(1) + ' MPG petrol';
+    document.getElementById('p_adj').textContent = adjTxt || '—';
+    document.getElementById('p_park').textContent = '£' + parkingCost.toFixed(2);
+    document.getElementById('p_total').textContent = '£' + total.toFixed(2);
+    document.getElementById('pRes').classList.add('visible');
+}
 function setCookie(name, value, days) {
     const date = new Date();
     date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
